@@ -1,4 +1,0 @@
-module.exports = {
-  mongoURI:
-    "mongodb://calvaria:13712273@cluster0-shard-00-00.cgtrc.mongodb.net:27017,cluster0-shard-00-01.cgtrc.mongodb.net:27017,cluster0-shard-00-02.cgtrc.mongodb.net:27017/<dbname>?ssl=true&replicaSet=atlas-1jw2i1-shard-0&authSource=admin&retryWrites=true&w=majority",
-};
