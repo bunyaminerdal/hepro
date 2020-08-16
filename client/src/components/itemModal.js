@@ -57,7 +57,7 @@ class ItemModal extends Component {
             Add Item
           </Button>
         ) : (
-          <h4 className="mb-3 ml">Please log in to manage items</h4>
+          <h4 className="mb-3 ml">Please log in to manage items!</h4>
         )}
 
         <Modal isOpen={this.state.modal} toggle={this.toggle}>
