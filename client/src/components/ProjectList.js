@@ -2,32 +2,30 @@ import React, { Component } from "react";
 import { Container, ListGroup, ListGroupItem, Button } from "reactstrap";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { connect } from "react-redux";
-import { getItems, deleteItem } from "../actions/itemActions";
-import ProjectList from "./ProjectList";
-
+import { getProjects, deleteProject } from "../actions/projectActions";
 import PropTypes from "prop-types";
 
-class ShoppingList extends Component {
+class ProjectList extends Component {
   static propTypes = {
-    getItems: PropTypes.func.isRequired,
-    item: PropTypes.object.isRequired,
+    getProjects: PropTypes.func.isRequired,
+    project: PropTypes.object.isRequired,
     isAuthenticated: PropTypes.bool,
   };
   componentDidMount() {
-    this.props.getItems();
+    this.props.getProjects();
   }
+
   onDeleteClick = (id) => {
-    this.props.deleteItem(id);
+    this.props.deleteProject(id);
   };
 
   render() {
-    const { items } = this.props.item;
-
+    const { projects } = this.props.project;
     return (
       <Container>
         <ListGroup>
           <TransitionGroup className="shopping-list">
-            {items.map(({ _id, name }) => (
+            {projects.map(({ _id, name, description }) => (
               <CSSTransition key={_id} timeout={500} classNames="fade">
                 <ListGroupItem>
                   {this.props.isAuthenticated ? (
@@ -40,24 +38,23 @@ class ShoppingList extends Component {
                       &times;
                     </Button>
                   ) : null}
-                  {name}
+                  {name} | {description}
                 </ListGroupItem>
               </CSSTransition>
             ))}
           </TransitionGroup>
         </ListGroup>
-        {this.props.isAuthenticated ? <ProjectList /> : null}
       </Container>
     );
   }
 }
 
 const mapStateToProps = (state) => ({
-  item: state.item,
+  project: state.project,
   isAuthenticated: state.auth.isAuthenticated,
 });
 
 export default connect(mapStateToProps, {
-  getItems,
-  deleteItem,
-})(ShoppingList);
+  getProjects,
+  deleteProject,
+})(ProjectList);
