@@ -48,6 +48,7 @@ class ProjectModal extends Component {
 
     //add item via add item action
     this.props.addProject(newProject);
+
     this.toggle();
   };
 
@@ -63,7 +64,7 @@ class ProjectModal extends Component {
             Add Project
           </Button>
         ) : (
-          <h4 className="mb-3 ml">Please log in to manage items!</h4>
+          <h1>Projects</h1>
         )}
         {/* {this.setState({ ownerId: this.props.auth.user })} */}
 

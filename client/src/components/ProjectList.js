@@ -10,6 +10,7 @@ class ProjectList extends Component {
     getProjects: PropTypes.func.isRequired,
     project: PropTypes.object.isRequired,
     isAuthenticated: PropTypes.bool,
+    isProjectsLoading: PropTypes.bool,
   };
   componentDidMount() {
     this.props.getProjects();
@@ -21,14 +22,15 @@ class ProjectList extends Component {
 
   render() {
     const { projects } = this.props.project;
+
     return (
       <Container>
-        <ListGroup>
-          <TransitionGroup className="shopping-list">
-            {projects.map(({ _id, name, description }) => (
-              <CSSTransition key={_id} timeout={500} classNames="fade">
-                <ListGroupItem>
-                  {this.props.isAuthenticated ? (
+        {this.props.isAuthenticated ? (
+          <ListGroup>
+            <TransitionGroup className="shopping-list">
+              {projects.map(({ _id, name, description }) => (
+                <CSSTransition key={_id} timeout={500} classNames="fade">
+                  <ListGroupItem>
                     <Button
                       className="remove-btn"
                       color="danger"
@@ -37,13 +39,13 @@ class ProjectList extends Component {
                     >
                       &times;
                     </Button>
-                  ) : null}
-                  {name} | {description}
-                </ListGroupItem>
-              </CSSTransition>
-            ))}
-          </TransitionGroup>
-        </ListGroup>
+                    {name} | {description}
+                  </ListGroupItem>
+                </CSSTransition>
+              ))}
+            </TransitionGroup>
+          </ListGroup>
+        ) : null}
       </Container>
     );
   }
@@ -52,6 +54,7 @@ class ProjectList extends Component {
 const mapStateToProps = (state) => ({
   project: state.project,
   isAuthenticated: state.auth.isAuthenticated,
+  isProjectsLoading: state.auth.isProjectsLoading,
 });
 
 export default connect(mapStateToProps, {

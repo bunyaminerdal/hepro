@@ -53,6 +53,7 @@ class LoginModal extends Component {
   toggle = () => {
     //clear errors
     this.props.clearErrors();
+
     this.setState({
       modal: !this.state.modal,
     });
@@ -118,6 +119,7 @@ class LoginModal extends Component {
 }
 
 const mapStateToProps = (state) => ({
+  project: state.project,
   isAuthenticated: state.auth.isAuthenticated,
   error: state.error,
 });

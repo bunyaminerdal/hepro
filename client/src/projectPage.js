@@ -11,7 +11,6 @@ class ProjectPage extends Component {
   render() {
     return (
       <Container>
-        <ItemModal />
         <ProjectModal />
         <ProjectList />
       </Container>
