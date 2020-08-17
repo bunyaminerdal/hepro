@@ -6,7 +6,7 @@ import {
   NavbarBrand,
   Nav,
   NavItem,
-  //NavLink,
+  NavLink,
   Container,
   NavbarText,
 } from "reactstrap";
@@ -59,7 +59,12 @@ class AppNavbar extends Component {
       <div>
         <Navbar color="dark" dark expand="sm" className="mb-5">
           <Container>
-            <NavbarBrand href="/">Shopping list</NavbarBrand>
+            <NavbarBrand href="/">Home</NavbarBrand>
+            <Nav className="ml-auto" navbar>
+              <NavLink color="dark ml-auto" href="/projects">
+                My Projects
+              </NavLink>
+            </Nav>
             <NavbarToggler onClick={this.toggle} />
             <Collapse isOpen={this.state.isOpen} navbar>
               <Nav className="ml-auto" navbar>

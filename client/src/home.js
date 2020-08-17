@@ -4,14 +4,14 @@ import { Container } from "reactstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
-class Home extends Component {
+class HomePage extends Component {
   render() {
     return (
-      <Container>
+      <div>
         <h1>Home page</h1>
-      </Container>
+      </div>
     );
   }
 }
 
-export default Home;
+export default HomePage;
