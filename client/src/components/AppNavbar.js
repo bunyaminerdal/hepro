@@ -61,9 +61,11 @@ class AppNavbar extends Component {
           <Container>
             <NavbarBrand href="/">Home</NavbarBrand>
             <Nav className="ml-auto" navbar>
-              <NavLink color="dark ml-auto" href="/projects">
-                My Projects
-              </NavLink>
+              {isAuthenticated ? (
+                <NavLink color="dark ml-auto" href="/projects">
+                  My Projects
+                </NavLink>
+              ) : null}
             </Nav>
             <NavbarToggler onClick={this.toggle} />
             <Collapse isOpen={this.state.isOpen} navbar>

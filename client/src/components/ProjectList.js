@@ -7,10 +7,8 @@ import PropTypes from "prop-types";
 
 class ProjectList extends Component {
   static propTypes = {
-    getProjects: PropTypes.func.isRequired,
     project: PropTypes.object.isRequired,
     isAuthenticated: PropTypes.bool,
-    isProjectsLoading: PropTypes.bool,
   };
   componentDidMount() {
     this.props.getProjects();
@@ -22,7 +20,6 @@ class ProjectList extends Component {
 
   render() {
     const { projects } = this.props.project;
-
     return (
       <Container>
         {this.props.isAuthenticated ? (
@@ -52,9 +49,8 @@ class ProjectList extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  project: state.project,
   isAuthenticated: state.auth.isAuthenticated,
-  isProjectsLoading: state.auth.isProjectsLoading,
+  project: state.project,
 });
 
 export default connect(mapStateToProps, {

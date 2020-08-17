@@ -29,6 +29,9 @@ class ProjectModal extends Component {
   toggle = () => {
     this.setState({
       modal: !this.state.modal,
+      ownerId: "",
+      name: "",
+      description: "",
     });
   };
   onChange = (e) => {
