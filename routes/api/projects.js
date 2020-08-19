@@ -36,4 +36,17 @@ router.delete("/:id", auth, (req, res) => {
     .catch((err) => res.status(404).json({ success: false }));
 });
 
+// @route UPDATE api/items/:id
+// @desc update a item
+// @access Private
+router.put("/:id", auth, (req, res) => {
+  Project.findById(req.params.id)
+    .then((project) =>
+      project
+        .update({ name: req.body.name, description: req.body.description })
+        .then(() => res.json({ update: true }))
+    )
+    .catch((err) => res.status(404).json({ update: false }));
+});
+
 module.exports = router;

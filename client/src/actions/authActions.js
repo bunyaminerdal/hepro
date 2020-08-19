@@ -12,6 +12,8 @@ import {
   REGISTER_FAIL,
   SELECTED_PROJECT,
   DESELECT_PROJECT,
+  SELECTED_DM,
+  DESELECT_DM,
 } from "../actions/types";
 
 //check token & load user
@@ -54,6 +56,27 @@ export const deselectProject = () => {
     type: DESELECT_PROJECT,
   };
 };
+
+export const selectedDm = (id) => (dispatch, getState) => {
+  axios
+    .get(`/api/auth/dm/${id}`, tokenConfig(getState))
+    .then((res) =>
+      dispatch({
+        type: SELECTED_DM,
+        payload: res.data,
+      })
+    )
+    .catch((err) =>
+      dispatch(returnErrors(err.response.data, err.response.status))
+    );
+};
+
+export const deselectDm = () => {
+  return {
+    type: DESELECT_DM,
+  };
+};
+
 //REGISTER USER
 export const register = ({ name, email, password }) => (dispatch) => {
   //HEADERS
