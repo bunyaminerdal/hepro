@@ -8,9 +8,9 @@ import store from "./store";
 import { loadUser } from "./actions/authActions";
 
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./App.css";
-import HomePage from "./home";
-import ProjectPage from "./projectPage";
+import HomePage from "./pages/home";
+import ProjectPage from "./pages/projectPage";
+import projectMainPage from "./pages/projectMainPage";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 class App extends Component {
@@ -28,6 +28,7 @@ class App extends Component {
               <Switch>
                 <Route exact path="/" component={HomePage} />
                 <Route exact path="/projects" component={ProjectPage} />
+                <Route exact path="/project_main" component={projectMainPage} />
               </Switch>
             </Container>
           </div>

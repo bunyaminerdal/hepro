@@ -1,8 +1,3 @@
-export const GET_ITEMS = "GET_ITEMS";
-export const ADD_ITEM = "ADD_ITEM";
-export const DELETE_ITEM = "DELETE_ITEM";
-export const ITEMS_LOADING = "ITEMS_LOADING";
-
 export const USER_LOADING = "USER_LOADING";
 export const USER_LOADED = "USER_LOADED";
 export const AUTH_ERROR = "AUTH_ERROR";
@@ -13,6 +8,7 @@ export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 export const REGISTER_FAIL = "REGISTER_FAIL";
 export const GET_ERRORS = "GET_ERRORS";
 export const CLEAR_ERRORS = "CLEAR_ERRORS";
+export const SELECTED_PROJECT = "SELECTED_PROJECT";
 
 export const GET_PROJECTS = "GET_PROJECTS";
 export const UNLOAD_PROJECTS = "UNLOAD_PROJECTS";

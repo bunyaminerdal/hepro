@@ -2,7 +2,8 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 //Create SCHEMA
-const ItemSchema = new Schema({
+const DmSchema = new Schema({
+  ownerId: { type: Schema.Types.ObjectId, ref: "Project" },
   name: {
     type: String,
     required: true,
@@ -13,4 +14,4 @@ const ItemSchema = new Schema({
   },
 });
 
-module.exports = Item = mongoose.model("item", ItemSchema);
+module.exports = Dm = mongoose.model("decisionmaker", DmSchema);

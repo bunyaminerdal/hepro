@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import ProjectList from "./components/ProjectList";
-import ProjectModal from "./components/projectModal";
+import ProjectList from "../components/ProjectList";
+import ProjectModal from "../components/projectModal";
 import { Container } from "reactstrap";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";

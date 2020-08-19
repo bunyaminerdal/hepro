@@ -31,6 +31,7 @@ export const deleteProject = (id) => (dispatch, getState) => {
       dispatch(returnErrors(err.response.data, err.response.status))
     );
 };
+
 export const addProject = (project) => (dispatch, getState) => {
   axios
     .post("/api/projects", project, tokenConfig(getState))

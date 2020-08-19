@@ -7,6 +7,7 @@ import {
   LOGOUT_SUCCESS,
   REGISTER_SUCCESS,
   REGISTER_FAIL,
+  SELECTED_PROJECT,
 } from "../actions/types";
 
 const initialState = {
@@ -30,6 +31,11 @@ export default function (state = initialState, action) {
         isLoading: false,
         user: action.payload,
       };
+    case SELECTED_PROJECT:
+      return {
+        ...state,
+        project: action.payload,
+      };
     case LOGIN_SUCCESS:
     case REGISTER_SUCCESS:
       localStorage.setItem("token", action.payload.token);
@@ -49,6 +55,7 @@ export default function (state = initialState, action) {
         ...state,
         token: null,
         user: null,
+        project: null,
         isAuthenticated: false,
         isLoading: false,
       };

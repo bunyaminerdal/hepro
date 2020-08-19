@@ -3,7 +3,9 @@ import { Container, ListGroup, ListGroupItem, Button } from "reactstrap";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { connect } from "react-redux";
 import { getProjects, deleteProject } from "../actions/projectActions";
+import { selectedProject } from "../actions/authActions";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 class ProjectList extends Component {
   static propTypes = {
@@ -16,6 +18,10 @@ class ProjectList extends Component {
 
   onDeleteClick = (id) => {
     this.props.deleteProject(id);
+  };
+
+  onSelectClick = (id) => {
+    this.props.selectedProject(id);
   };
 
   render() {
@@ -35,7 +41,13 @@ class ProjectList extends Component {
                   >
                     &times;
                   </Button>
-                  {name} | {description}
+                  <Link
+                    to="/project_main"
+                    onClick={this.onSelectClick.bind(this, _id)}
+                  >
+                    {name}
+                  </Link>
+                  | {description}
                 </ListGroupItem>
               </CSSTransition>
             ))}
@@ -54,4 +66,5 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, {
   getProjects,
   deleteProject,
+  selectedProject,
 })(ProjectList);

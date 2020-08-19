@@ -10,6 +10,7 @@ import {
   LOGOUT_SUCCESS,
   REGISTER_SUCCESS,
   REGISTER_FAIL,
+  SELECTED_PROJECT,
 } from "../actions/types";
 
 //check token & load user
@@ -34,7 +35,19 @@ export const loadUser = () => (dispatch, getState) => {
       });
     });
 };
-
+export const selectedProject = (id) => (dispatch, getState) => {
+  axios
+    .get(`/api/auth/project/${id}`, tokenConfig(getState))
+    .then((res) =>
+      dispatch({
+        type: SELECTED_PROJECT,
+        payload: res.data,
+      })
+    )
+    .catch((err) =>
+      dispatch(returnErrors(err.response.data, err.response.status))
+    );
+};
 //REGISTER USER
 export const register = ({ name, email, password }) => (dispatch) => {
   //HEADERS

@@ -3,35 +3,37 @@ const router = express.Router();
 const auth = require("../../middleware/auth");
 
 //Item Model
-const Item = require("../../models/item");
+const Dm = require("../../models/decisionmaker");
 
 // @route GET api/items
 // @desc GET all Items
 // @access Public
-router.get("/", (req, res) => {
-  Item.find()
+router.get("/", auth, (req, res) => {
+  Dm.find({ ownerId: req.project.id })
     .sort({ date: -1 })
-    .then((items) => res.json(items));
+    .then((dms) => res.json(dms));
 });
 
 // @route POST api/items
 // @desc Create a item
 // @access Private (2.parametre olarak auth ekledik)
-router.post("/", auth, (req, res) => {
-  const newItem = new Item({
+router.get("/dm", auth, (req, res) => {
+  res.send("ahaburdasın");
+  /* const newDm = new Dm({
+    ownerId: req.project.id,
     name: req.body.name,
   });
 
-  newItem.save().then((item) => res.json(item));
+  newDm.save().then((dm) => res.json(dm)); */
 });
 
-// @route DELETE api/items/:id
+/* // @route DELETE api/items/:id
 // @desc Delete a item
 // @access Private
 router.delete("/:id", auth, (req, res) => {
-  Item.findById(req.params.id)
-    .then((item) => item.remove().then(() => res.json({ success: true })))
+  Project.findById(req.params.id)
+    .then((project) => project.remove().then(() => res.json({ success: true })))
     .catch((err) => res.status(404).json({ success: false }));
-});
+}); */
 
 module.exports = router;

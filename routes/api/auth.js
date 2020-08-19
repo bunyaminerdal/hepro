@@ -7,6 +7,7 @@ const auth = require("../../middleware/auth");
 
 //Item Model
 const User = require("../../models/user");
+const Project = require("../../models/project");
 
 // @route POST api/auth
 // @desc Authenticate a user
@@ -53,6 +54,14 @@ router.get("/user", auth, (req, res) => {
   User.findById(req.user.id)
     .select("-password")
     .then((user) => res.json(user));
+});
+// @route GET api/auth/user
+// @desc get user data
+// @access private
+router.get("/project/:id", auth, (req, res) => {
+  Project.findById(req.params.id)
+    .then((project) => res.json(project))
+    .catch((err) => res.status(404).json({ success: false }));
 });
 
 module.exports = router;
