@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Redirect } from "react-router-dom";
+import ProjectMain from "../components/ProjectMain";
+import { Container } from "reactstrap";
 
 class projectMainPage extends Component {
   static propTypes = {
@@ -15,7 +17,12 @@ class projectMainPage extends Component {
         return <Redirect to="/" />;
       }
     }
-    return <div>project: {project ? project.name : null}</div>;
+    return (
+      <Container>
+        <div>project: {project ? project : null}</div>
+        <ProjectMain></ProjectMain>
+      </Container>
+    );
   }
 }
 

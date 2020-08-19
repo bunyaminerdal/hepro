@@ -42,7 +42,7 @@ export const addDm = (dm, projectId) => (dispatch, getState) => {
 
 export const setDmLoading = (dm) => {
   return {
-    type: PROJECTS_LOADING,
+    type: DMS_LOADING,
   };
 };
 

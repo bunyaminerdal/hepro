@@ -38,13 +38,14 @@ export const loadUser = () => (dispatch, getState) => {
       });
     });
 };
+
 export const selectedProject = (id) => (dispatch, getState) => {
   axios
     .get(`/api/auth/project/${id}`, tokenConfig(getState))
     .then((res) =>
       dispatch({
         type: SELECTED_PROJECT,
-        payload: res.data,
+        payload: res.data._id,
       })
     )
     .catch((err) =>
