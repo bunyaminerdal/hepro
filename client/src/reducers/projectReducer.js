@@ -3,6 +3,7 @@ import {
   ADD_PROJECT,
   DELETE_PROJECT,
   PROJECTS_LOADING,
+  UNLOAD_PROJECTS,
 } from "../actions/types";
 
 const initialState = {
@@ -16,6 +17,12 @@ export default function (state = initialState, action) {
       return {
         ...state,
         projects: action.payload,
+        loading: false,
+      };
+    case UNLOAD_PROJECTS:
+      return {
+        ...state,
+        projects: null,
         loading: false,
       };
     case DELETE_PROJECT:

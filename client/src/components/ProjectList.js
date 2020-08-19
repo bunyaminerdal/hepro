@@ -11,7 +11,7 @@ class ProjectList extends Component {
     isAuthenticated: PropTypes.bool,
   };
   componentDidMount() {
-    this.props.getProjects();
+    if (this.props.isAuthenticated) this.props.getProjects();
   }
 
   onDeleteClick = (id) => {
@@ -22,27 +22,25 @@ class ProjectList extends Component {
     const { projects } = this.props.project;
     return (
       <Container>
-        {this.props.isAuthenticated ? (
-          <ListGroup>
-            <TransitionGroup className="shopping-list">
-              {projects.map(({ _id, name, description }) => (
-                <CSSTransition key={_id} timeout={500} classNames="fade">
-                  <ListGroupItem>
-                    <Button
-                      className="remove-btn"
-                      color="danger"
-                      size="sm"
-                      onClick={this.onDeleteClick.bind(this, _id)}
-                    >
-                      &times;
-                    </Button>
-                    {name} | {description}
-                  </ListGroupItem>
-                </CSSTransition>
-              ))}
-            </TransitionGroup>
-          </ListGroup>
-        ) : null}
+        <ListGroup>
+          <TransitionGroup className="shopping-list">
+            {projects.map(({ _id, name, description }) => (
+              <CSSTransition key={_id} timeout={500} classNames="fade">
+                <ListGroupItem>
+                  <Button
+                    className="remove-btn"
+                    color="danger"
+                    size="sm"
+                    onClick={this.onDeleteClick.bind(this, _id)}
+                  >
+                    &times;
+                  </Button>
+                  {name} | {description}
+                </ListGroupItem>
+              </CSSTransition>
+            ))}
+          </TransitionGroup>
+        </ListGroup>
       </Container>
     );
   }

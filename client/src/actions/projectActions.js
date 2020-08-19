@@ -4,6 +4,7 @@ import {
   ADD_PROJECT,
   DELETE_PROJECT,
   PROJECTS_LOADING,
+  UNLOAD_PROJECTS,
 } from "./types";
 import { tokenConfig } from "./authActions";
 import { returnErrors } from "./errorActions";
@@ -47,5 +48,11 @@ export const addProject = (project) => (dispatch, getState) => {
 export const setProjectLoading = (project) => {
   return {
     type: PROJECTS_LOADING,
+  };
+};
+
+export const unLoadProjects = (project) => {
+  return {
+    type: UNLOAD_PROJECTS,
   };
 };

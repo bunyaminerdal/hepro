@@ -4,10 +4,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
 class HomePage extends Component {
-  componentDidMount() {
-    console.log("asdasd");
-  }
-
   render() {
     return (
       <div>

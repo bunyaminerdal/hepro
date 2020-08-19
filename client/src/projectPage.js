@@ -20,6 +20,7 @@ class ProjectPage extends Component {
         return <Redirect to="/" />;
       }
     }
+
     return (
       <Container>
         {isAuthenticated ? (
