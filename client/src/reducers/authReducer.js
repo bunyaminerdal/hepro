@@ -8,6 +8,7 @@ import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
   SELECTED_PROJECT,
+  DESELECT_PROJECT,
 } from "../actions/types";
 
 const initialState = {
@@ -35,6 +36,11 @@ export default function (state = initialState, action) {
       return {
         ...state,
         project: action.payload,
+      };
+    case DESELECT_PROJECT:
+      return {
+        ...state,
+        project: null,
       };
     case LOGIN_SUCCESS:
     case REGISTER_SUCCESS:

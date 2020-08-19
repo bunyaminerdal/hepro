@@ -3,7 +3,7 @@ import { Container, ListGroup, ListGroupItem, Button } from "reactstrap";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { connect } from "react-redux";
 import { getProjects, deleteProject } from "../actions/projectActions";
-import { selectedProject } from "../actions/authActions";
+import { selectedProject, deselectProject } from "../actions/authActions";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
@@ -13,7 +13,10 @@ class ProjectList extends Component {
     isAuthenticated: PropTypes.bool,
   };
   componentDidMount() {
-    if (this.props.isAuthenticated) this.props.getProjects();
+    if (this.props.isAuthenticated) {
+      this.props.deselectProject();
+      this.props.getProjects();
+    }
   }
 
   onDeleteClick = (id) => {
@@ -67,4 +70,5 @@ export default connect(mapStateToProps, {
   getProjects,
   deleteProject,
   selectedProject,
+  deselectProject,
 })(ProjectList);

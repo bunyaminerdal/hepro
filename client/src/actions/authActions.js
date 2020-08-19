@@ -11,6 +11,7 @@ import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
   SELECTED_PROJECT,
+  DESELECT_PROJECT,
 } from "../actions/types";
 
 //check token & load user
@@ -47,6 +48,11 @@ export const selectedProject = (id) => (dispatch, getState) => {
     .catch((err) =>
       dispatch(returnErrors(err.response.data, err.response.status))
     );
+};
+export const deselectProject = () => {
+  return {
+    type: DESELECT_PROJECT,
+  };
 };
 //REGISTER USER
 export const register = ({ name, email, password }) => (dispatch) => {
