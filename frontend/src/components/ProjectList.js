@@ -44,10 +44,7 @@ class ProjectList extends Component {
                   >
                     &times;
                   </Button>
-                  <Link
-                    to="/project_main"
-                    onClick={this.onSelectClick.bind(this, _id)}
-                  >
+                  <Link to="#" onClick={this.onSelectClick.bind(this, _id)}>
                     {name}
                   </Link>
                   | {description}

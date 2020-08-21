@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import ProjectList from "../components/ProjectList";
+import DmList from "../components/DmList";
 import ProjectModal from "../components/projectModal";
-import { Container } from "reactstrap";
+import { Container, Row, Col } from "reactstrap";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
@@ -14,21 +15,34 @@ class ProjectPage extends Component {
   };
 
   render() {
-    const { isAuthenticated } = this.props.auth;
+    const { isAuthenticated, project } = this.props.auth;
+
     if (isAuthenticated !== null) {
       if (!isAuthenticated) {
         return <Redirect to="/" />;
       }
     }
+    if (project) {
+      console.log(project);
+    }
 
     return (
-      <Container>
-        {isAuthenticated ? (
+      <Container fluid={true}>
+        {isAuthenticated && project === null ? (
           <div>
             <ProjectModal />
             <ProjectList />
           </div>
-        ) : null}
+        ) : (
+          <div>
+            <Row>
+              <Col xs="3" fluid={false}>
+                <DmList />
+              </Col>
+              <Col xs="9">Table</Col>
+            </Row>
+          </div>
+        )}
       </Container>
     );
   }

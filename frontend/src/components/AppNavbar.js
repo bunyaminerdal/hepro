@@ -16,6 +16,7 @@ import PropTypes from "prop-types";
 import RegisterModal from "./auth/RegisterModal";
 import LoginModal from "./auth/LoginModal";
 import Logout from "./auth/Logout";
+import { deselectProject } from "../actions/authActions";
 
 class AppNavbar extends Component {
   state = {
@@ -58,11 +59,17 @@ class AppNavbar extends Component {
     return (
       <div>
         <Navbar color="dark" dark expand="sm" className="mb-5">
-          <Container>
+          <Container fluid={true}>
             <NavbarBrand href="/">Home</NavbarBrand>
             <Nav className="ml-auto" navbar>
               {isAuthenticated ? (
-                <NavLink color="dark ml-auto" href="/projects">
+                <NavLink
+                  color="dark ml-auto"
+                  onClick={() => {
+                    this.props.deselectProject();
+                  }}
+                  href="/project"
+                >
                   My Projects
                 </NavLink>
               ) : null}
@@ -84,4 +91,4 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps, null)(AppNavbar);
+export default connect(mapStateToProps, { deselectProject })(AppNavbar);
