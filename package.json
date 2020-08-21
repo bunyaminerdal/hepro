@@ -1,15 +1,15 @@
 {
-  "name": "mern_shopping_list",
+  "name": "mcda",
   "version": "1.0.0",
-  "description": "Shopping list app",
+  "description": "multi criteri decision analys",
   "main": "server.js",
   "scripts": {
-    "client-install": "npm install --prefix client",
+    "frontend-install": "npm install --prefix frontend",
     "start": "node server.js",
     "server": "nodemon server.js",
-    "client": "npm start --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+    "frontend": "npm start --prefix frontend",
+    "dev": "concurrently \"npm run server\" \"npm run frontend\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend"
   },
   "author": "Bünyamin ERDAL",
   "license": "MIT",
