@@ -2,7 +2,7 @@ import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { logout } from "../../actions/authActions";
 import { unLoadProjects } from "../../actions/projectActions";
-import { NavLink } from "reactstrap";
+import { Menu } from "antd";
 import PropTypes from "prop-types";
 
 export class Logout extends Component {
@@ -18,9 +18,9 @@ export class Logout extends Component {
   render() {
     return (
       <Fragment>
-        <NavLink onClick={this.handleClick.bind(this)} href="#">
+        <Menu.Item key="4" onClick={this.handleClick.bind(this)}>
           Logout
-        </NavLink>
+        </Menu.Item>
       </Fragment>
     );
   }

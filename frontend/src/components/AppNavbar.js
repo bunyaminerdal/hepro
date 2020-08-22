@@ -1,29 +1,28 @@
-import React, { Component, Fragment } from "react";
-import {
-  Collapse,
-  Navbar,
-  NavbarToggler,
-  NavbarBrand,
-  Nav,
-  NavItem,
-  NavLink,
-  Container,
-  NavbarText,
-} from "reactstrap";
+import React, { Component } from "react";
+
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
-import RegisterModal from "./auth/RegisterModal";
-import LoginModal from "./auth/LoginModal";
-import Logout from "./auth/Logout";
 import { deselectProject } from "../actions/authActions";
+import { Layout, Menu } from "antd";
+import { Link } from "react-router-dom";
+import { logout } from "../actions/authActions";
+import { unLoadProjects } from "../actions/projectActions";
+
+const { Header } = Layout;
 
 class AppNavbar extends Component {
   state = {
     isOpen: false,
   };
+  handleClick() {
+    this.props.unLoadProjects();
+    this.props.logout();
+  }
 
   static propTypes = {
+    logout: PropTypes.func.isRequired,
+    unLoadProjects: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
   };
   toggle = () => {
@@ -33,55 +32,44 @@ class AppNavbar extends Component {
   };
   render() {
     const { isAuthenticated, user } = this.props.auth;
-    const authLinks = (
-      <Fragment>
-        <NavItem>
-          <NavbarText color="dark" className="navbar-tex mr-3">
-            <strong>{user ? `Welcome, ${user.name}` : null}</strong>
-          </NavbarText>
-        </NavItem>
-        <NavItem>
-          <Logout />
-        </NavItem>
-      </Fragment>
-    );
 
-    const guestLinks = (
-      <Fragment>
-        <NavItem>
-          <RegisterModal />
-        </NavItem>
-        <NavItem>
-          <LoginModal />
-        </NavItem>
-      </Fragment>
-    );
     return (
       <div>
-        <Navbar color="dark" dark expand="sm" className="mb-5">
-          <Container fluid={true}>
-            <NavbarBrand href="/">Home</NavbarBrand>
-            <Nav className="ml-auto" navbar>
-              {isAuthenticated ? (
-                <NavLink
-                  color="dark ml-auto"
+        <Header style={{ position: "fixed", zIndex: 1, width: "100%" }}>
+          <div className="logo" />
+          <Menu theme="dark" mode="horizontal" defaultSelectedKeys={["1"]}>
+            <Menu.Item key="1">
+              <Link to="/">Home</Link>
+            </Menu.Item>
+            {isAuthenticated ? (
+              <Menu.Item key="2">
+                <Link
+                  to="/project"
                   onClick={() => {
                     this.props.deselectProject();
                   }}
-                  href="/project"
-                >
-                  My Projects
-                </NavLink>
-              ) : null}
-            </Nav>
-            <NavbarToggler onClick={this.toggle} />
-            <Collapse isOpen={this.state.isOpen} navbar>
-              <Nav className="ml-auto" navbar>
-                {isAuthenticated ? authLinks : guestLinks}
-              </Nav>
-            </Collapse>
-          </Container>
-        </Navbar>
+                ></Link>
+                My projects
+              </Menu.Item>
+            ) : null}
+            {isAuthenticated ? (
+              <Menu.Item key="3">{user.name}</Menu.Item>
+            ) : (
+              <Menu.Item key="4">
+                <Link to="/signup">Sign up</Link>
+              </Menu.Item>
+            )}
+            {isAuthenticated ? (
+              <Menu.Item key="5" onClick={this.handleClick.bind(this)}>
+                Sign out
+              </Menu.Item>
+            ) : (
+              <Menu.Item key="6">
+                <Link to="/signin">Sign in</Link>
+              </Menu.Item>
+            )}
+          </Menu>
+        </Header>
       </div>
     );
   }
@@ -91,4 +79,8 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps, { deselectProject })(AppNavbar);
+export default connect(mapStateToProps, {
+  logout,
+  unLoadProjects,
+  deselectProject,
+})(AppNavbar);

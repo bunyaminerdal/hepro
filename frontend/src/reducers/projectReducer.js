@@ -22,7 +22,7 @@ export default function (state = initialState, action) {
     case UNLOAD_PROJECTS:
       return {
         ...state,
-        projects: null,
+        projects: [],
         loading: false,
       };
     case DELETE_PROJECT:

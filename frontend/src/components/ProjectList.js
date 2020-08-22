@@ -14,7 +14,6 @@ class ProjectList extends Component {
   };
   componentDidMount() {
     if (this.props.isAuthenticated) {
-      this.props.deselectProject();
       this.props.getProjects();
     }
   }
