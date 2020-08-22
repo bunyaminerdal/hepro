@@ -63,14 +63,13 @@ class ProjectModal extends Component {
             color="dark"
             style={{ marginBottom: "2rem" }}
             onClick={this.toggle}
+            block
           >
             Add Project
           </Button>
         ) : (
           <h1>Projects</h1>
         )}
-        {/* {this.setState({ ownerId: this.props.auth.user })} */}
-
         <Modal isOpen={this.state.modal} toggle={this.toggle}>
           <ModalHeader toggle={this.toggle}>Add To Project List</ModalHeader>
           <ModalBody>

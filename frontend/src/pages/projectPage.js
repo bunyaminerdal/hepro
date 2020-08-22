@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import ProjectList from "../components/ProjectList";
 import DmList from "../components/DmList";
-import ProjectModal from "../components/projectModal";
-import { Container, Row, Col } from "reactstrap";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
@@ -21,28 +19,20 @@ class ProjectPage extends Component {
         return <Redirect to="/" />;
       }
     }
-    if (project) {
-      console.log(project);
-    }
 
     return (
-      <Container fluid={true}>
+      <div>
         {isAuthenticated && project === null ? (
           <div>
-            <ProjectModal />
             <ProjectList />
           </div>
-        ) : (
+        ) : null}
+        {isAuthenticated && project !== null ? (
           <div>
-            <Row>
-              <Col xs="3" fluid={false}>
-                <DmList />
-              </Col>
-              <Col xs="9">Table</Col>
-            </Row>
+            <DmList />
           </div>
-        )}
-      </Container>
+        ) : null}
+      </div>
     );
   }
 }

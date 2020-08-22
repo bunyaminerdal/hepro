@@ -4,12 +4,17 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 import { deselectProject } from "../actions/authActions";
-import { Layout, Menu } from "antd";
-import { Link } from "react-router-dom";
 import { logout } from "../actions/authActions";
 import { unLoadProjects } from "../actions/projectActions";
-
-const { Header } = Layout;
+import {
+  Collapse,
+  Navbar,
+  NavbarToggler,
+  NavbarBrand,
+  Nav,
+  NavbarText,
+} from "reactstrap";
+import { Link } from "react-router-dom";
 
 class AppNavbar extends Component {
   state = {
@@ -35,41 +40,50 @@ class AppNavbar extends Component {
 
     return (
       <div>
-        <Header style={{ position: "fixed", zIndex: 1, width: "100%" }}>
-          <div className="logo" />
-          <Menu theme="dark" mode="horizontal" defaultSelectedKeys={["1"]}>
-            <Menu.Item key="1">
-              <Link to="/">Home</Link>
-            </Menu.Item>
-            {isAuthenticated ? (
-              <Menu.Item key="2">
-                <Link
-                  to="/project"
-                  onClick={() => {
-                    this.props.deselectProject();
-                  }}
-                ></Link>
-                My projects
-              </Menu.Item>
-            ) : null}
-            {isAuthenticated ? (
-              <Menu.Item key="3">{user.name}</Menu.Item>
-            ) : (
-              <Menu.Item key="4">
-                <Link to="/signup">Sign up</Link>
-              </Menu.Item>
-            )}
-            {isAuthenticated ? (
-              <Menu.Item key="5" onClick={this.handleClick.bind(this)}>
-                Sign out
-              </Menu.Item>
-            ) : (
-              <Menu.Item key="6">
-                <Link to="/signin">Sign in</Link>
-              </Menu.Item>
-            )}
-          </Menu>
-        </Header>
+        <Navbar color="dark" dark expand="md">
+          <NavbarBrand href="/">Home</NavbarBrand>
+          <NavbarToggler onClick={this.toggle} />
+          <Collapse isOpen={this.state.isOpen} navbar>
+            <Nav className="mr-auto" navbar>
+              {isAuthenticated ? (
+                <NavbarText>
+                  <Link
+                    color="dark"
+                    dark
+                    to="/project"
+                    onClick={() => {
+                      this.props.deselectProject();
+                    }}
+                  >
+                    My project
+                  </Link>
+                </NavbarText>
+              ) : null}
+            </Nav>
+            <Nav navbar>
+              {isAuthenticated ? (
+                <NavbarText className="mr-2">
+                  Welcome, {user.name} |{" "}
+                </NavbarText>
+              ) : null}
+              {isAuthenticated ? (
+                <NavbarText>
+                  <Link onClick={this.handleClick.bind(this)}> Sign out </Link>
+                </NavbarText>
+              ) : null}
+              {!isAuthenticated ? (
+                <NavbarText className="mr-2">
+                  <Link to="/signin"> Sign in |</Link>
+                </NavbarText>
+              ) : null}
+              {!isAuthenticated ? (
+                <NavbarText>
+                  <Link to="/signup"> Sign up </Link>
+                </NavbarText>
+              ) : null}
+            </Nav>
+          </Collapse>
+        </Navbar>
       </div>
     );
   }

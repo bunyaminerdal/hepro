@@ -6,6 +6,7 @@ import { getProjects, deleteProject } from "../actions/projectActions";
 import { selectedProject, deselectProject } from "../actions/authActions";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import ProjectModal from "../components/projectModal";
 
 class ProjectList extends Component {
   static propTypes = {
@@ -30,8 +31,10 @@ class ProjectList extends Component {
     const { projects } = this.props.project;
     return (
       <Container>
-        <ListGroup>
+        <ListGroup className="mt-3">
           <TransitionGroup className="shopping-list">
+            <ProjectModal />
+
             {projects.map(({ _id, name, description }) => (
               <CSSTransition key={_id} timeout={500} classNames="fade">
                 <ListGroupItem>
@@ -43,7 +46,10 @@ class ProjectList extends Component {
                   >
                     &times;
                   </Button>
-                  <Link to="#" onClick={this.onSelectClick.bind(this, _id)}>
+                  <Link
+                    className="ml-3 mr-3"
+                    onClick={this.onSelectClick.bind(this, _id)}
+                  >
                     {name}
                   </Link>
                   | {description}
