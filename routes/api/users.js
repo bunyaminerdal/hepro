@@ -6,7 +6,11 @@ const jwt = require("jsonwebtoken");
 
 //Item Model
 const User = require("../../models/user");
-
+function isEmail(val) {
+  let regEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  if(!regEmail.test(val)){
+    return true;
+}}
 // @route POST api/users
 // @desc Register new User
 // @access Public
@@ -16,6 +20,10 @@ router.post("/", (req, res) => {
   //simple validation
   if (!name || !email || !password) {
     return res.status(400).json({ msg: "please enter all fields" });
+  }
+  
+  if (isEmail(email)) {
+    return res.status(400).json({ msg: "ali baba" });
   }
 
   //check existing user
