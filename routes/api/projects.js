@@ -18,19 +18,23 @@ router.get("/", auth, (req, res) => {
 // @desc Create a item
 // @access Private (2.parametre olarak auth ekledik)
 router.post("/", auth, (req, res) => {
+  const { name} = req.body;
+  //simple validation
+  if (!name) {
+    return res.status(400).json({ msg: "please enter name field" });
+  }
   const newProject = new Project({
     ownerId: req.user.id,
     name: req.body.name,
     description: req.body.description,
   });
-
   newProject.save().then((project) => res.json(project));
 });
 
 // @route DELETE api/items/:id
 // @desc Delete a item
 // @access Private
-router.delete("/:id", auth, (req, res) => {
+router.delete("/:id", auth, (req, res) => {  
   Project.findById(req.params.id)
     .then((project) => project.remove().then(() => res.json({ success: true })))
     .catch((err) => res.status(404).json({ success: false }));
@@ -39,7 +43,7 @@ router.delete("/:id", auth, (req, res) => {
 // @route UPDATE api/items/:id
 // @desc update a item
 // @access Private
-router.put("/:id", auth, (req, res) => {
+router.put("/:id/edit", auth, (req, res) => {  
   Project.findById(req.params.id)
     .then((project) =>
       project

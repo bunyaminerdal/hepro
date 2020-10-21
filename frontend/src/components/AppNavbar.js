@@ -49,7 +49,7 @@ class AppNavbar extends Component {
                 <NavbarText>
                   <Link
                     color="dark"
-                    dark
+                    
                     to="/project"
                     onClick={() => {
                       this.props.deselectProject();
@@ -68,7 +68,7 @@ class AppNavbar extends Component {
               ) : null}
               {isAuthenticated ? (
                 <NavbarText>
-                  <Link onClick={this.handleClick.bind(this)}> Sign out </Link>
+                  <Link to="#" onClick={this.handleClick.bind(this)}> Sign out </Link>
                 </NavbarText>
               ) : null}
               {!isAuthenticated ? (

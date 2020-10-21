@@ -3,8 +3,11 @@ import {
   GET_PROJECTS,
   ADD_PROJECT,
   DELETE_PROJECT,
+  EDIT_PROJECT,
   PROJECTS_LOADING,
   UNLOAD_PROJECTS,
+  PROJECT_EDITING,
+  PROJECT_EDITED,
 } from "./types";
 import { tokenConfig } from "./authActions";
 import { returnErrors } from "./errorActions";
@@ -32,6 +35,20 @@ export const deleteProject = (id) => (dispatch, getState) => {
     );
 };
 
+export const editProject = (id) => (dispatch, getState) => {  
+  axios
+    .put(`/api/projects/${id}/edit`, tokenConfig(getState))
+    .then((res) =>
+      dispatch({
+        type: EDIT_PROJECT,
+        payload: res.data,
+      })
+    )
+    .catch((err) =>
+      dispatch(returnErrors(err.response.data, err.response.status))
+    );
+};
+
 export const addProject = (project) => (dispatch, getState) => {
   axios
     .post("/api/projects", project, tokenConfig(getState))
@@ -49,6 +66,19 @@ export const addProject = (project) => (dispatch, getState) => {
 export const setProjectLoading = (project) => {
   return {
     type: PROJECTS_LOADING,
+  };
+};
+
+export const projectEditing = (id) => {
+  return {
+    type: PROJECT_EDITING,
+    payload: id,
+  };
+};
+
+export const projectEdited = (project) => {
+  return {
+    type: PROJECT_EDITED,
   };
 };
 
