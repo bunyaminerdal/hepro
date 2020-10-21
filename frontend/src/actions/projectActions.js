@@ -36,8 +36,9 @@ export const deleteProject = (id) => (dispatch, getState) => {
 };
 
 export const editProject = (id,project) => (dispatch, getState) => {  
+  
   axios
-    .put(`/api/projects/${id}/edit`,project, tokenConfig(getState))
+    .put(`/api/projects/${id}`,project, tokenConfig(getState))
     .then((res) =>
       dispatch({
         type: EDIT_PROJECT,
@@ -52,7 +53,7 @@ export const editProject = (id,project) => (dispatch, getState) => {
 export const addProject = (project) => (dispatch, getState) => {
   axios
     .post("/api/projects", project, tokenConfig(getState))
-    .then((res) =>
+    .then( (res) =>
       dispatch({
         type: ADD_PROJECT,
         payload: res.data,

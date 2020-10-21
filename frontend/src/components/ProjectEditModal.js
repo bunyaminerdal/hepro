@@ -60,7 +60,7 @@ class ProjectEditModal extends Component {
 
     const editingProject = {
       ownerId:this.state.ownerId,
-      id: this.state.id,      
+      _id: this.state.id,      
       name: this.state.name,
       description: this.state.description,
     };
@@ -89,7 +89,7 @@ class ProjectEditModal extends Component {
                 <Input
                   type="text"
                   name="name"
-                  id="project"
+                  id="name"
                   placeholder="name..."
                   onChange={this.onChange}
                   defaultValue={selectedproject.name}
@@ -102,7 +102,7 @@ class ProjectEditModal extends Component {
                 <Input
                   type="text"
                   name="description"
-                  id="project"
+                  id="description"
                   placeholder="Add a description..."
                   onChange={this.onChange}
                   defaultValue={selectedproject.description}

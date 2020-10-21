@@ -40,9 +40,9 @@ export default function (state = initialState, action) {
     case EDIT_PROJECT:
       return {
         ...state,
-        projects: [state.projects.filter(
-          (project) => project._id !== action.payload
-        ) , action.payload],
+        projects: state.projects.map(project => {
+          return project._id === action.payload._id ?  action.payload : project}
+      ),
       };
     case ADD_PROJECT:
       return {
