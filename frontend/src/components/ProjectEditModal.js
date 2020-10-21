@@ -16,8 +16,8 @@ import PropTypes from "prop-types";
 
 class ProjectEditModal extends Component {
   state = {
+    ownerId:"",
     id: "",
-    modal: true,
     name: "",
     description: "",
   };
@@ -26,10 +26,9 @@ class ProjectEditModal extends Component {
     isAuthenticated: PropTypes.bool,
     projectediting: PropTypes.bool,
   };
-
+    
   toggle = () => {    
     this.props.projectEdited();
-    
   };
   onChange = (e) => {
     this.setState({
@@ -37,15 +36,35 @@ class ProjectEditModal extends Component {
     });
   };
 
+  componentDidUpdate(prevProps, prevState) {
+    if(this.props.project.projectediting){
+      if(prevState.ownerId!==this.props.selectedproject.ownerId){
+        this.setState({ownerId:this.props.selectedproject.ownerId})
+      }
+      if(prevState.id!==this.props.selectedproject._id){
+        this.setState({id:this.props.selectedproject._id})
+      }
+      if(prevState.name!==this.props.selectedproject.name){
+        this.setState({name:this.props.selectedproject.name})
+      }
+      if(prevState.description!==this.props.selectedproject.description){
+        this.setState({description:this.props.selectedproject.description})
+      }
+      
+    }
+  }
+  
+
   onSubmit = (e) => {
     e.preventDefault();
 
     const editingProject = {
-      id: this.props.selectedproject._id,      
-      name: this.props.selectedproject.name,
-      description: this.props.selectedproject.description,
+      ownerId:this.state.ownerId,
+      id: this.state.id,      
+      name: this.state.name,
+      description: this.state.description,
     };
-
+    
     //add item via add item action
     this.props.editProject(this.props.selectedproject._id,editingProject);
 
@@ -54,6 +73,7 @@ class ProjectEditModal extends Component {
 
   render() {
     const {projectediting, selectedproject} = this.props.project;
+    
     
     return (
       
@@ -72,7 +92,7 @@ class ProjectEditModal extends Component {
                   id="project"
                   placeholder="name..."
                   onChange={this.onChange}
-                  value={selectedproject.name}
+                  defaultValue={selectedproject.name}
                   
                 /> 
                 ) : null}
@@ -85,7 +105,7 @@ class ProjectEditModal extends Component {
                   id="project"
                   placeholder="Add a description..."
                   onChange={this.onChange}
-                  value={selectedproject.description}
+                  defaultValue={selectedproject.description}
                 />
                 ) : null}
                 <Button color="dark" style={{ marginTop: "2rem" }} block>

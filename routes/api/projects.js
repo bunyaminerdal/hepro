@@ -44,13 +44,9 @@ router.delete("/:id", auth, (req, res) => {
 // @desc update a item
 // @access Private
 router.put("/:id/edit", auth, (req, res) => {  
-  Project.findById(req.params.id)
-    .then((project) =>
-      project
-        .update({ name: req.body.name, description: req.body.description })
-        .then(() => res.json({ update: true }))
-    )
-    .catch((err) => res.status(404).json({ update: false }));
+    console.log(req.body)
+    Project.findByIdAndUpdate(req.params.id, req.body)
+    
 });
 
 module.exports = router;
