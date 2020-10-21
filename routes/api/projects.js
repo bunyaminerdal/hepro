@@ -43,15 +43,15 @@ router.delete("/:id", auth, (req, res) => {
 // @route UPDATE api/items/:id
 // @desc update a item
 // @access Private
- router.put("/:id", auth, async (req, res) => {  
+router.put("/:id", auth, (req, res) => {  
   const { name} = req.body;
   //simple validation
   if (!name) {
     return res.status(400).json({ msg: "please enter name field" });
   }
-  await Project.findById(req.params.id)   
-  .then((project) => project.updateOne({ "name" : req.body.name,"description":req.body.description })); 
-   Project.findById(req.params.id).then((project1) => res.json(project1));
+  /* Project.findById(req.params.id)
+  .then((project) => project.updateOne({ "name" : req.body.name,"description":req.body.description }).then(() => res.json(project))); */
+  Project.findByIdAndUpdate(req.params.id,req.body).then(() => res.json(req.body));
   
 });
 
