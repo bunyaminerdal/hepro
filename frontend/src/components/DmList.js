@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getDms } from "../actions/dmActions";
+import { getDms,dmAdding,deleteDm } from "../actions/dmActions";
 import PropTypes from "prop-types";
 import {
   Container,
@@ -12,6 +12,7 @@ import {
 } from "reactstrap";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { Link } from "react-router-dom";
+import DmModal from "../components/dmModal";
 
 export class ProjectMain extends Component {
   static propTypes = {
@@ -23,6 +24,12 @@ export class ProjectMain extends Component {
 
     this.props.getDms(project);
   }
+  onDeleteClick = (id) => {
+    this.props.deleteDm(id);
+  };
+  onAddClick = () => {    
+    this.props.dmAdding();
+  };
   render() {
     const { project } = this.props.auth;
     const { dms } = this.props.dm;
@@ -31,7 +38,17 @@ export class ProjectMain extends Component {
         <Row>
           <Col xs="3">
             <ListGroup>
+            <Button
+            color="dark"
+            //style={{ marginBottom: "2rem" }}
+            onClick={this.onAddClick.bind(this)}
+            block
+          >
+            Add Decision Maker
+          </Button>
               <TransitionGroup className="dm-list">
+                 <DmModal  />
+                {/*<ProjectEditModal/> */}
                 {dms.map(({ _id, name }) => (
                   <CSSTransition key={_id} timeout={500} classNames="fade">
                     <ListGroupItem>
@@ -39,11 +56,11 @@ export class ProjectMain extends Component {
                         className="remove-btn"
                         color="danger"
                         size="sm"
-                        //onClick={this.onDeleteClick.bind(this, _id)}
+                        onClick={this.onDeleteClick.bind(this, _id)}
                       >
                         &times;
                       </Button>
-                      <Link
+                      <Link to="#"
                         className="ml-3 mr-3"
                         //onClick={this.onSelectClick.bind(this, _id)}
                       >
@@ -60,6 +77,7 @@ export class ProjectMain extends Component {
       </Container>
     );
   }
+  
 }
 
 const mapStateToProps = (state) => ({
@@ -67,4 +85,4 @@ const mapStateToProps = (state) => ({
   dm: state.dm,
 });
 
-export default connect(mapStateToProps, { getDms })(ProjectMain);
+export default connect(mapStateToProps, { getDms,dmAdding,deleteDm })(ProjectMain);

@@ -18,6 +18,11 @@ router.get("/:id", auth, (req, res) => {
 // @desc Create a item
 // @access Private (2.parametre olarak auth ekledik)
 router.post("/:id", auth, (req, res) => {
+  const { name} = req.body;
+  //simple validation
+  if (!name) {
+    return res.status(400).json({ msg: "please enter name field" });
+  }
   const newDm = new Dm({
     ownerId: req.params.id,
     name: req.body.name,
@@ -38,11 +43,15 @@ router.delete("/:id", auth, (req, res) => {
 // @desc update a item
 // @access Private
 router.put("/:id", auth, (req, res) => {
-  Dm.findById(req.params.id)
-    .then((dm) =>
-      dm.update({ name: req.body.name }).then(() => res.json({ update: true }))
-    )
-    .catch((err) => res.status(404).json({ update: false }));
+  const { name} = req.body;
+  //simple validation
+  if (!name) {
+    return res.status(400).json({ msg: "please enter name field" });
+  }
+  /* Project.findById(req.params.id)
+  .then((project) => project.updateOne({ "name" : req.body.name,"description":req.body.description }).then(() => res.json(project))); */
+  Project.findByIdAndUpdate(req.params.id,req.body).then(() => res.json(req.body));
+  
 });
 
 module.exports = router;

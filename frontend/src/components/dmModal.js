@@ -11,14 +11,14 @@ import {
 } from "reactstrap";
 
 import { connect } from "react-redux";
-import { addProject,projectAdded } from "../actions/projectActions";
+import { addDm,dmAdded } from "../actions/dmActions";
 import { clearErrors } from "../actions/errorActions";
 import PropTypes from "prop-types";
 
-class ProjectModal extends Component {
-  state = {     
+class DmModal extends Component {
+  state = {
+    ownerId: "",    
     name: "",
-    description: "",
     msg: null,
   };
 
@@ -31,7 +31,7 @@ class ProjectModal extends Component {
   toggle = () => {
     //clear errors
     this.props.clearErrors();    
-    this.props.projectAdded();
+    this.props.dmAdded();
 
   };
   onChange =  (e) => {
@@ -41,14 +41,14 @@ class ProjectModal extends Component {
     
   };
   componentDidUpdate(prevProps, prevState) {
-    if(this.props.project.projectadding){      
+    if(this.props.dm.dmadding){      
       
       if(prevProps!==this.props){
         this.setState({name:""})
-      }
+      }     
       if(prevProps!==this.props){
-        this.setState({description:""})
-      }
+        this.setState({ownerId:this.props.ownerId})        
+      }    
 
       if(this.state.msg && this.state.name){
         this.setState({msg: null})
@@ -57,7 +57,7 @@ class ProjectModal extends Component {
     const { error } = this.props;
       if (error !== prevProps.error) {
         //check for register error
-        if (error.id === "PROJECT_ADD_FAIL") {
+        if (error.id === "DM_ADD_FAIL") {
           this.setState({ msg: error.msg.msg });
         } else {
           this.setState({ msg: null });
@@ -68,27 +68,26 @@ class ProjectModal extends Component {
   onSubmit = (e) => {
     e.preventDefault();
 
-    const newProject = {      
-      name: this.state.name,
-      description: this.state.description,
+    const newDm = {      
+      name: this.state.name,      
     };
-
+    
     //add item via add item action
-    this.props.addProject(newProject);
+    this.props.addDm(newDm,this.state.ownerId);
     
   };
 
   render() {
-    const {projectadding} = this.props.project;
+    const {dmadding} = this.props.dm;
     return (
       <div>        
-        <Modal isOpen={projectadding} toggle={this.toggle}>
-          <ModalHeader toggle={this.toggle}>Add To Project List</ModalHeader>
+        <Modal isOpen={dmadding} toggle={this.toggle}>
+          <ModalHeader toggle={this.toggle}>Add To Decision Maker List</ModalHeader>
           <ModalBody>
           
             <Form onSubmit={this.onSubmit}>
               <FormGroup>
-                <Label for="project">Project Name</Label>
+                <Label for="dm">Decision Maker Name</Label>
                 <Input
                   type="text"
                   name="name"
@@ -97,18 +96,11 @@ class ProjectModal extends Component {
                   onChange={this.onChange}
                   invalid={this.state.msg!==null}
                 />
-                <Label for="project">Description</Label>
-                <Input
-                  type="text"
-                  name="description"
-                  id="description"
-                  placeholder="Add a description..."
-                  onChange={this.onChange}
-                />
+                
                 {this.state.msg===null?(<Button color="dark" style={{ marginTop: "2rem" }} block>
-                  Add Project
+                  Add Decision Maker
                 </Button>):<Button disabled color="dark" style={{ marginTop: "2rem" }} block>
-                  Add Project
+                Add Decision Maker
                 </Button>}
                 
               </FormGroup>
@@ -121,9 +113,10 @@ class ProjectModal extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  project: state.project,  
+  dm: state.dm,
+  ownerId: state.auth.project,
   isAuthenticated: state.auth.isAuthenticated,
   error: state.error,
 });
 
-export default connect(mapStateToProps, { addProject,clearErrors,projectAdded })(ProjectModal);
+export default connect(mapStateToProps, { addDm,clearErrors,dmAdded })(DmModal);

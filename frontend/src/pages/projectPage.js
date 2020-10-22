@@ -4,7 +4,6 @@ import DmList from "../components/DmList";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
-import "bootstrap/dist/css/bootstrap.min.css";
 
 class ProjectPage extends Component {
   static propTypes = {

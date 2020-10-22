@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GET_DMS, ADD_DM, DELETE_DM, DMS_LOADING, UNLOAD_DMS } from "./types";
+import { GET_DMS, ADD_DM, DELETE_DM, DMS_LOADING, UNLOAD_DMS,DM_EDITED,DM_ADDING,DM_ADDED,DM_EDITING } from "./types";
 import { tokenConfig } from "./authActions";
 import { returnErrors } from "./errorActions";
 
@@ -36,7 +36,7 @@ export const addDm = (dm, projectId) => (dispatch, getState) => {
       })
     )
     .catch((err) =>
-      dispatch(returnErrors(err.response.data, err.response.status))
+      dispatch(returnErrors(err.response.data, err.response.status,"DM_ADD_FAIL"))
     );
 };
 
@@ -49,5 +49,27 @@ export const setDmLoading = (dm) => {
 export const unLoadDms = (dm) => {
   return {
     type: UNLOAD_DMS,
+  };
+};
+export const dmEditing = (id) => {
+  return {
+    type: DM_EDITING,
+    payload: id,
+  };
+};
+export const dmAdding = (id) => {
+  return {
+    type: DM_ADDING,    
+  };
+};
+export const dmAdded = (id) => {
+  return {
+    type: DM_ADDED,    
+  };
+};
+
+export const dmEdited = (project) => {
+  return {
+    type: DM_EDITED,
   };
 };
