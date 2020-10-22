@@ -8,38 +8,55 @@ import {
   FormGroup,
   Label,
   Input,
+  Alert,
 } from "reactstrap";
 
 import { connect } from "react-redux";
-import { addProject } from "../actions/projectActions";
+import { addProject,projectAdded } from "../actions/projectActions";
+import { clearErrors } from "../actions/errorActions";
 import PropTypes from "prop-types";
 
 class ProjectModal extends Component {
   state = {
-    ownerId: "",
-    modal: false,
+    ownerId: "",    
     name: "",
     description: "",
+    msg: null,
   };
 
   static propTypes = {
     isAuthenticated: PropTypes.bool,
+    projecteadding: PropTypes.bool,
+    error: PropTypes.object.isRequired,
+    clearErrors: PropTypes.func.isRequired,
   };
 
   toggle = () => {
-    this.setState({
-      modal: !this.state.modal,
-      ownerId: "",
-      name: "",
-      description: "",
-    });
+    //clear errors
+    this.props.clearErrors();
+    this.props.projectAdded();
   };
   onChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value,
     });
+    if(this.state.msg && this.state.name){
+      this.setState({msg: null})
+    }
   };
+  componentDidUpdate(prevProps, prevState) {
+    
+    const { error } = this.props;
+      if (error !== prevProps.error) {
+        //check for register error
+        if (error.id === "PROJECT_ADD_FAIL") {
+          this.setState({ msg: error.msg.msg });
+        } else {
+          this.setState({ msg: null });
+        }
+      }
 
+  }
   onSubmit = (e) => {
     e.preventDefault();
 
@@ -51,49 +68,44 @@ class ProjectModal extends Component {
 
     //add item via add item action
     this.props.addProject(newProject);
-
-    this.toggle();
+    
+    
   };
 
   render() {
+    const {projectadding} = this.props.project;
     return (
-      <div>
-        {this.props.isAuthenticated ? (
-          <Button
-            color="dark"
-            style={{ marginBottom: "2rem" }}
-            onClick={this.toggle}
-            block
-          >
-            Add Project
-          </Button>
-        ) : (
-          <h1>Projects</h1>
-        )}
-        <Modal isOpen={this.state.modal} toggle={this.toggle}>
+      <div>        
+        <Modal isOpen={projectadding} toggle={this.toggle}>
           <ModalHeader toggle={this.toggle}>Add To Project List</ModalHeader>
           <ModalBody>
+          {this.state.msg ? (
+              <Alert color="danger"> {this.state.msg}</Alert>
+            ) : null}
             <Form onSubmit={this.onSubmit}>
               <FormGroup>
                 <Label for="project">Project Name</Label>
                 <Input
                   type="text"
                   name="name"
-                  id="project"
+                  id="name"
                   placeholder="name..."
                   onChange={this.onChange}
+                  invalid={this.state.msg!==null}
                 />
                 <Label for="project">Description</Label>
                 <Input
                   type="text"
                   name="description"
-                  id="project"
+                  id="description"
                   placeholder="Add a description..."
                   onChange={this.onChange}
                 />
-                <Button color="dark" style={{ marginTop: "2rem" }} block>
+                {this.state.msg===null?(<Button color="dark" style={{ marginTop: "2rem" }} block>
                   Add Project
-                </Button>
+                </Button>):<Button disabled color="dark" style={{ marginTop: "2rem" }} block>
+                  Add Project
+                </Button>}
               </FormGroup>
             </Form>
           </ModalBody>
@@ -107,6 +119,7 @@ const mapStateToProps = (state) => ({
   project: state.project,
   ownerId: state.auth.user,
   isAuthenticated: state.auth.isAuthenticated,
+  error: state.error,
 });
 
-export default connect(mapStateToProps, { addProject })(ProjectModal);
+export default connect(mapStateToProps, { addProject,clearErrors,projectAdded })(ProjectModal);

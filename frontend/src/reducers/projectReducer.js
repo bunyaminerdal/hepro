@@ -6,13 +6,16 @@ import {
   PROJECTS_LOADING,
   UNLOAD_PROJECTS,
   PROJECT_EDITING,
+  PROJECT_ADDING,
   PROJECT_EDITED,
+  PROJECT_ADDED,
 } from "../actions/types";
 
 const initialState = {
   projects: [],
   loading: false,
   projectediting: false,
+  projectadding: false,
   selectedproject: null,
 };
 
@@ -50,6 +53,7 @@ export default function (state = initialState, action) {
       return {
         ...state,
         projects: [action.payload, ...state.projects],
+        projectadding:false,
       };
     case PROJECTS_LOADING:
       return {
@@ -64,6 +68,12 @@ export default function (state = initialState, action) {
           (project) => project._id === action.payload
         ),
       };
+    case PROJECT_ADDING:
+      return {
+        ...state,
+        projectadding: true,
+        
+      };
 
     case PROJECT_EDITED:
       return {
@@ -71,6 +81,12 @@ export default function (state = initialState, action) {
         projectediting: false,
         selectedproject: null,
       };
+    case PROJECT_ADDED:
+      return {
+        ...state,
+        projectadding: false,        
+      };
+    
 
     default:
       return state;

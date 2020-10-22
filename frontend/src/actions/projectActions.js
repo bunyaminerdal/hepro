@@ -7,7 +7,9 @@ import {
   PROJECTS_LOADING,
   UNLOAD_PROJECTS,
   PROJECT_EDITING,
+  PROJECT_ADDING,
   PROJECT_EDITED,
+  PROJECT_ADDED,
 } from "./types";
 import { tokenConfig } from "./authActions";
 import { returnErrors } from "./errorActions";
@@ -60,7 +62,7 @@ export const addProject = (project) => (dispatch, getState) => {
       })
     )
     .catch((err) =>
-      dispatch(returnErrors(err.response.data, err.response.status))
+      dispatch(returnErrors(err.response.data, err.response.status,"PROJECT_ADD_FAIL"))
     );
 };
 
@@ -74,6 +76,16 @@ export const projectEditing = (id) => {
   return {
     type: PROJECT_EDITING,
     payload: id,
+  };
+};
+export const projectAdding = (id) => {
+  return {
+    type: PROJECT_ADDING,    
+  };
+};
+export const projectAdded = (id) => {
+  return {
+    type: PROJECT_ADDED,    
   };
 };
 

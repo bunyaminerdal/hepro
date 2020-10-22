@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Container, ListGroup, ListGroupItem, Button } from "reactstrap";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { connect } from "react-redux";
-import { getProjects, deleteProject,projectEditing } from "../actions/projectActions";
+import { getProjects, deleteProject,projectEditing,projectAdding } from "../actions/projectActions";
 import { selectedProject, deselectProject } from "../actions/authActions";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
@@ -29,6 +29,9 @@ class ProjectList extends Component {
   onEditClick = (id) => {    
     this.props.projectEditing(id);
   };
+  onAddClick = () => {    
+    this.props.projectAdding();
+  };
 
   onSelectClick = (id) => {
     this.props.selectedProject(id);
@@ -39,8 +42,17 @@ class ProjectList extends Component {
     return (
       <Container>
         <ListGroup className="mt-3">
+        <Button
+            color="dark"
+            //style={{ marginBottom: "2rem" }}
+            onClick={this.onAddClick.bind(this)}
+            block
+          >
+            Add Project
+          </Button>
           <TransitionGroup className="shopping-list">
-            <ProjectModal />            
+          
+            <ProjectModal  />
             <ProjectEditModal/>
             {projects.map(({ _id, name, description }) => (
               <CSSTransition key={_id} timeout={500} classNames="fade">
@@ -90,4 +102,5 @@ export default connect(mapStateToProps, {
   selectedProject,
   deselectProject,
   projectEditing,
+  projectAdding,
 })(ProjectList);

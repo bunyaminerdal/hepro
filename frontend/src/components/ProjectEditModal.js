@@ -94,12 +94,9 @@ class ProjectEditModal extends Component {
   };
 
   render() {
-    const {selectedproject,projectediting} = this.props.project;
-    
-    return (
-      
-      <div>
-        
+    const {selectedproject,projectediting} = this.props.project;    
+    return (      
+      <div>        
         <Modal isOpen={projectediting} toggle={this.toggle}>
           <ModalHeader toggle={this.toggle}>Edit Project</ModalHeader>
           <ModalBody>
