@@ -60,7 +60,7 @@ class ProjectList extends Component {
                     size="sm"
                     onClick={this.onEditClick.bind(this, _id)}
                   >
-                    EDİT
+                    EDIT
                   </Button>
                   <Link to="#"
                     className="ml-3 mr-3"

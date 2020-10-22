@@ -55,7 +55,7 @@ class AppNavbar extends Component {
                       this.props.deselectProject();
                     }}
                   >
-                    My project
+                    My projects
                   </Link>
                 </NavbarText>
               ) : null}
