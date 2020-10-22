@@ -8,7 +8,6 @@ import {
   FormGroup,
   Label,
   Input,
-  Alert,
 } from "reactstrap";
 
 import { connect } from "react-redux";
@@ -33,19 +32,30 @@ class ProjectModal extends Component {
 
   toggle = () => {
     //clear errors
-    this.props.clearErrors();
+    this.props.clearErrors();    
     this.props.projectAdded();
+
   };
-  onChange = (e) => {
-    this.setState({
+  onChange =  (e) => {
+     this.setState({
       [e.target.name]: e.target.value,
     });
-    if(this.state.msg && this.state.name){
-      this.setState({msg: null})
-    }
+    
   };
   componentDidUpdate(prevProps, prevState) {
-    
+    if(this.props.project.projectadding){      
+      
+      if(prevProps!==this.props){
+        this.setState({name:""})
+      }
+      if(prevProps!==this.props){
+        this.setState({description:""})
+      }
+
+      if(this.state.msg && this.state.name){
+        this.setState({msg: null})
+      }
+    }
     const { error } = this.props;
       if (error !== prevProps.error) {
         //check for register error
@@ -69,7 +79,6 @@ class ProjectModal extends Component {
     //add item via add item action
     this.props.addProject(newProject);
     
-    
   };
 
   render() {
@@ -79,9 +88,7 @@ class ProjectModal extends Component {
         <Modal isOpen={projectadding} toggle={this.toggle}>
           <ModalHeader toggle={this.toggle}>Add To Project List</ModalHeader>
           <ModalBody>
-          {this.state.msg ? (
-              <Alert color="danger"> {this.state.msg}</Alert>
-            ) : null}
+          
             <Form onSubmit={this.onSubmit}>
               <FormGroup>
                 <Label for="project">Project Name</Label>
@@ -106,6 +113,7 @@ class ProjectModal extends Component {
                 </Button>):<Button disabled color="dark" style={{ marginTop: "2rem" }} block>
                   Add Project
                 </Button>}
+                
               </FormGroup>
             </Form>
           </ModalBody>

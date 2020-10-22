@@ -8,7 +8,6 @@ import {
   FormGroup,
   Label,
   Input,
-  Alert,
 } from "reactstrap";
 
 import { connect } from "react-redux";
@@ -99,10 +98,7 @@ class ProjectEditModal extends Component {
       <div>        
         <Modal isOpen={projectediting} toggle={this.toggle}>
           <ModalHeader toggle={this.toggle}>Edit Project</ModalHeader>
-          <ModalBody>
-          {this.state.msg ? (
-              <Alert color="danger"> {this.state.msg}</Alert>
-            ) : null}
+          <ModalBody>          
             <Form onSubmit={this.onSubmit}>
               <FormGroup>
                 <Label for="project">Project Name</Label>
