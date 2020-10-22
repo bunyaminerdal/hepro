@@ -42,6 +42,10 @@ class ProjectEditModal extends Component {
     this.setState({
       [e.target.name]: e.target.value,
     });
+    if(this.state.msg && this.state.name){
+      this.setState({msg:null})
+    }
+    
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -58,8 +62,7 @@ class ProjectEditModal extends Component {
       }
       if(prevState.description!==this.props.selectedproject.description){
         this.setState({description:this.props.selectedproject.description})
-      }
-      
+      }    
       
     }
     const { error } = this.props;
@@ -71,7 +74,7 @@ class ProjectEditModal extends Component {
           this.setState({ msg: null });
         }
       }
-
+    
   }
   
 
@@ -106,8 +109,8 @@ class ProjectEditModal extends Component {
             <Form onSubmit={this.onSubmit}>
               <FormGroup>
                 <Label for="project">Project Name</Label>
-                {selectedproject?(
-                <Input
+                {selectedproject ?(
+                <Input                
                   type="text"
                   name="name"
                   id="name"
