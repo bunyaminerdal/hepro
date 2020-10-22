@@ -23,6 +23,7 @@ export class ProjectMain extends Component {
     const { project } = this.props.auth;
 
     this.props.getDms(project);
+    
   }
   onDeleteClick = (id) => {
     this.props.deleteDm(id);
@@ -49,7 +50,7 @@ export class ProjectMain extends Component {
               <TransitionGroup className="dm-list">
                  <DmModal  />
                 {/*<ProjectEditModal/> */}
-                {dms.map(({ _id, name }) => (
+                {dms!==null?dms.map(({ _id, name }) => (
                   <CSSTransition key={_id} timeout={500} classNames="fade">
                     <ListGroupItem>
                       <Button
@@ -68,7 +69,7 @@ export class ProjectMain extends Component {
                       </Link>
                     </ListGroupItem>
                   </CSSTransition>
-                ))}
+                )):null}
               </TransitionGroup>
             </ListGroup>
           </Col>

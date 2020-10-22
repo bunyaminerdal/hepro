@@ -3,7 +3,7 @@ import { Container, ListGroup, ListGroupItem, Button } from "reactstrap";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { connect } from "react-redux";
 import { getProjects, deleteProject,projectEditing,projectAdding } from "../actions/projectActions";
-import { selectedProject, deselectProject } from "../actions/authActions";
+import { selectedProject } from "../actions/authActions";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import ProjectModal from "../components/projectModal";
@@ -20,6 +20,7 @@ class ProjectList extends Component {
       this.props.getProjects();
 
     }
+    
   }
 
   onDeleteClick = (id) => {
@@ -99,8 +100,7 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, {
   getProjects,
   deleteProject,
-  selectedProject,
-  deselectProject,
+  selectedProject,  
   projectEditing,
   projectAdding,
 })(ProjectList);

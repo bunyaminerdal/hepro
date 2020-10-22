@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import { deselectProject } from "../actions/authActions";
 import { logout } from "../actions/authActions";
 import { unLoadProjects } from "../actions/projectActions";
+import { unLoadDms } from "../actions/dmActions";
 import {
   Collapse,
   Navbar,
@@ -22,6 +23,7 @@ class AppNavbar extends Component {
   };
   handleClick() {
     this.props.unLoadProjects();
+    this.props.unLoadDms();
     this.props.logout();
   }
 
@@ -53,6 +55,7 @@ class AppNavbar extends Component {
                     to="/project"
                     onClick={() => {
                       this.props.deselectProject();
+                      this.props.unLoadDms();
                     }}
                   >
                     My projects
@@ -96,5 +99,7 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, {
   logout,
   unLoadProjects,
+  unLoadDms,
   deselectProject,
+
 })(AppNavbar);
