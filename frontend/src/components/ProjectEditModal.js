@@ -117,7 +117,7 @@ class ProjectEditModal extends Component {
                   placeholder="name..."
                   onChange={this.onChange}
                   defaultValue={selectedproject.name}
-                  
+                  invalid={this.state.msg!==null}
                 /> 
                 ) : null}
                 
