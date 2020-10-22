@@ -8,28 +8,36 @@ import {
   FormGroup,
   Label,
   Input,
+  Alert,
 } from "reactstrap";
 
 import { connect } from "react-redux";
 import { editProject,projectEdited } from "../actions/projectActions";
+import { clearErrors } from "../actions/errorActions";
 import PropTypes from "prop-types";
 
 class ProjectEditModal extends Component {
-  state = {
+  state = {    
     ownerId:"",
     id: "",
     name: "",
     description: "",
+    msg: null,
   };
 
   static propTypes = {
     isAuthenticated: PropTypes.bool,
     projectediting: PropTypes.bool,
+    error: PropTypes.object.isRequired,
+    clearErrors: PropTypes.func.isRequired,
   };
-    
-  toggle = () => {    
+
+  toggle = () => {     
+    //clear errors
+    this.props.clearErrors();
     this.props.projectEdited();
   };
+
   onChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value,
@@ -37,7 +45,8 @@ class ProjectEditModal extends Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
-    if(this.props.project.projectediting){
+    
+    if(this.props.project.projectediting){      
       if(prevState.ownerId!==this.props.selectedproject.ownerId){
         this.setState({ownerId:this.props.selectedproject.ownerId})
       }
@@ -51,13 +60,24 @@ class ProjectEditModal extends Component {
         this.setState({description:this.props.selectedproject.description})
       }
       
+      
     }
+    const { error } = this.props;
+      if (error !== prevProps.error) {
+        //check for register error
+        if (error.id === "PROJECT_EDIT_FAIL") {
+          this.setState({ msg: error.msg.msg });
+        } else {
+          this.setState({ msg: null });
+        }
+      }
+
   }
   
 
   onSubmit = (e) => {
     e.preventDefault();
-
+    
     const editingProject = {
       ownerId:this.state.ownerId,
       _id: this.state.id,      
@@ -67,13 +87,11 @@ class ProjectEditModal extends Component {
     
     //add item via add item action
     this.props.editProject(this.props.selectedproject._id,editingProject);
-
-    this.toggle();
+    
   };
 
   render() {
-    const {projectediting, selectedproject} = this.props.project;
-    
+    const {selectedproject,projectediting} = this.props.project;
     
     return (
       
@@ -82,6 +100,9 @@ class ProjectEditModal extends Component {
         <Modal isOpen={projectediting} toggle={this.toggle}>
           <ModalHeader toggle={this.toggle}>Edit Project</ModalHeader>
           <ModalBody>
+          {this.state.msg ? (
+              <Alert color="danger"> {this.state.msg}</Alert>
+            ) : null}
             <Form onSubmit={this.onSubmit}>
               <FormGroup>
                 <Label for="project">Project Name</Label>
@@ -108,9 +129,12 @@ class ProjectEditModal extends Component {
                   defaultValue={selectedproject.description}
                 />
                 ) : null}
-                <Button color="dark" style={{ marginTop: "2rem" }} block>
+                {this.state.msg===null?(<Button color="dark" style={{ marginTop: "2rem" }} block>
                   Edit Project
-                </Button>
+                </Button>):<Button disabled color="dark" style={{ marginTop: "2rem" }} block>
+                  Edit Project
+                </Button>}
+                
               </FormGroup>
             </Form>
           </ModalBody>
@@ -125,6 +149,7 @@ const mapStateToProps = (state) => ({
   ownerId: state.auth.user,
   isAuthenticated: state.auth.isAuthenticated, 
   selectedproject: state.project.selectedproject,
+  error: state.error,
 });
 
-export default connect(mapStateToProps, { editProject,projectEdited })(ProjectEditModal);
+export default connect(mapStateToProps, { editProject,projectEdited,clearErrors })(ProjectEditModal);

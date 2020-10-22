@@ -43,6 +43,8 @@ export default function (state = initialState, action) {
         projects: state.projects.map(project => {
           return project._id === action.payload._id ?  action.payload : project}
       ),
+        projectediting: false,
+        selectedproject: null,
       };
     case ADD_PROJECT:
       return {
