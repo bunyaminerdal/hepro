@@ -58,10 +58,8 @@ class LoginPage extends Component {
         onFinish={this.onFinish}
         onChange={this.onChange}
         style={{
-          width: 500,
-          padding: 24,
-          margin: 50,
-
+          width: 500,          
+          margin: 50,          
           background: "white",
         }}
       >

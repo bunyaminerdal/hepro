@@ -51,7 +51,7 @@ class ProjectList extends Component {
           >
             Add Project
           </Button>
-          <TransitionGroup className="shopping-list">
+          <TransitionGroup>
           
             <ProjectModal  />
             <ProjectEditModal/>

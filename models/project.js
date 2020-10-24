@@ -6,9 +6,12 @@ const ProjectSchema = new Schema({
   name: {
     type: String,
     required: true,
+    minlength:3,
+    maxlength:30,
   },
   description: {
     type: String,
+    maxlength:150,
   },
   date: {
     type: Date,

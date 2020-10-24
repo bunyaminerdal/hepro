@@ -7,6 +7,8 @@ const DmSchema = new Schema({
   name: {
     type: String,
     required: true,
+    minlength:3,
+    maxlength:30,
   },
   date: {
     type: Date,

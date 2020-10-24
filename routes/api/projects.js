@@ -18,10 +18,19 @@ router.get("/", auth, (req, res) => {
 // @desc Create a item
 // @access Private (2.parametre olarak auth ekledik)
 router.post("/", auth, (req, res) => {
-  const { name} = req.body;
+  const { name,description} = req.body;
   //simple validation
   if (!name) {
     return res.status(400).json({ msg: "please enter name field" });
+  }
+  if(name.length<3){
+    return res.status(400).json({ msg: "Name field must be at least 3 characters!" });
+  }else if (name.length>30) {
+    return res.status(400).json({ msg: "Name field must be less than 30 characters!" });
+  }
+
+  if (description.length>100) {
+    return res.status(400).json({ msg: "Description field must be less than 100 characters!" });
   }
   const newProject = new Project({
     ownerId: req.user.id,
@@ -44,10 +53,19 @@ router.delete("/:id", auth, (req, res) => {
 // @desc update a item
 // @access Private
 router.put("/:id", auth, (req, res) => {  
-  const { name} = req.body;
+  const { name,description} = req.body;
   //simple validation
   if (!name) {
-    return res.status(400).json({ msg: "please enter name field" });
+    return res.status(400).json({ msg: "Please enter name field!" });
+  }
+  if(name.length<3){
+    return res.status(400).json({ msg: "Name field must be at least 3 characters!" });
+  }else if (name.length>30) {
+    return res.status(400).json({ msg: "Name field must be less than 30 characters!" });
+  }
+
+  if (description.length>100) {
+    return res.status(400).json({ msg: "Name field must be less than 100 characters!" });
   }
   /* Project.findById(req.params.id)
   .then((project) => project.updateOne({ "name" : req.body.name,"description":req.body.description }).then(() => res.json(project))); */

@@ -8,6 +8,7 @@ import {
   FormGroup,
   Label,
   Input,
+  Alert,
 } from "reactstrap";
 
 import { connect } from "react-redux";
@@ -50,7 +51,7 @@ class ProjectModal extends Component {
         this.setState({description:""})
       }
 
-      if(this.state.msg && this.state.name){
+      if((this.state.msg && this.state.name) || (this.state.msg && this.state.description)){
         this.setState({msg: null})
       }
     }
@@ -95,15 +96,16 @@ class ProjectModal extends Component {
                   id="name"
                   placeholder="name..."
                   onChange={this.onChange}
-                  invalid={this.state.msg!==null}
+                  invalid={(this.state.name.length<3 || this.state.name.length>30)}                  
                 />
                 <Label for="project">Description</Label>
                 <Input
-                  type="text"
+                  type="textarea"
                   name="description"
                   id="description"
                   placeholder="Add a description..."
                   onChange={this.onChange}
+                  invalid={this.state.description.length>100}
                 />
                 {this.state.msg===null?(<Button color="dark" style={{ marginTop: "2rem" }} block>
                   Add Project
@@ -112,6 +114,9 @@ class ProjectModal extends Component {
                 </Button>}
                 
               </FormGroup>
+              {this.state.msg ? (
+              <Alert color="danger"> {this.state.msg}</Alert>
+            ) : null}
             </Form>
           </ModalBody>
         </Modal>

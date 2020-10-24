@@ -58,7 +58,7 @@ export default function (state = initialState, action) {
         ...state,
         loading: true,
       };
-      case DM_EDITING:
+    case DM_EDITING:
         return {
           ...state,
           dmediting: true,
@@ -66,20 +66,20 @@ export default function (state = initialState, action) {
             (dm) => dm._id === action.payload
           ),
         };
-      case DM_ADDING:
+    case DM_ADDING:
         return {
           ...state,
           dmadding: true,
           
         };
   
-      case DM_EDITED:
+    case DM_EDITED:
         return {
           ...state,
           dmediting: false,
           selecteddm: null,
         };
-      case DM_ADDED:
+    case DM_ADDED:
         return {
           ...state,
           dmadding: false,        

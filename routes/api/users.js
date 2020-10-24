@@ -19,11 +19,23 @@ router.post("/", (req, res) => {
 
   //simple validation
   if (!name || !email || !password) {
-    return res.status(400).json({ msg: "please enter all fields" });
+    return res.status(400).json({ msg: "Please enter all fields!" });
+  }
+  if(name.length<3){
+    return res.status(400).json({ msg: "Name field must be at least 3 characters!" });
+  }else if (name.length>30) {
+    return res.status(400).json({ msg: "Name field must be less than 30 characters!" });
+  }
+  if(password.length<8){
+    return res.status(400).json({ msg: "Password field must be at least 8 characters!" });
+  }else if (password.length>30) {
+    return res.status(400).json({ msg: "Password field must be less than 30 characters!" });
   }
   
   if (isEmail(email)) {
-    return res.status(400).json({ msg: "ali baba" });
+    return res.status(400).json({ msg: "Please enter a valid Email!" });
+  }else if(email.length>50){
+    return res.status(400).json({ msg: "Email field must be less than 50 characters!" });
   }
 
   //check existing user

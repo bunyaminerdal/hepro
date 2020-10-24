@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GET_DMS, ADD_DM, DELETE_DM, DMS_LOADING, UNLOAD_DMS,DM_EDITED,DM_ADDING,DM_ADDED,DM_EDITING } from "./types";
+import { EDIT_DM,GET_DMS, ADD_DM, DELETE_DM, DMS_LOADING, UNLOAD_DMS,DM_EDITED,DM_ADDING,DM_ADDED,DM_EDITING } from "./types";
 import { tokenConfig } from "./authActions";
 import { returnErrors } from "./errorActions";
 
@@ -23,6 +23,20 @@ export const deleteDm = (id) => (dispatch, getState) => {
     )
     .catch((err) =>
       dispatch(returnErrors(err.response.data, err.response.status))
+    );
+};
+export const editDm = (id,dm) => (dispatch, getState) => {  
+  
+  axios
+    .put(`/api/dms/${id}`,dm, tokenConfig(getState))
+    .then((res) =>
+      dispatch({
+        type: EDIT_DM,
+        payload: res.data,
+      })
+    )
+    .catch((err) =>
+      dispatch(returnErrors(err.response.data, err.response.status,"DM_EDIT_FAIL"))
     );
 };
 

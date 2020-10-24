@@ -21,8 +21,14 @@ router.post("/:id", auth, (req, res) => {
   const { name} = req.body;
   //simple validation
   if (!name) {
-    return res.status(400).json({ msg: "please enter name field" });
+    return res.status(400).json({ msg: "Please enter name field!" });
   }
+  if(name.length<3){
+    return res.status(400).json({ msg: "Name field must be at least 3 characters!" });
+  }else if (name.length>30) {
+    return res.status(400).json({ msg: "Name field must be less than 30 characters!" });
+  }
+
   const newDm = new Dm({
     ownerId: req.params.id,
     name: req.body.name,
@@ -46,11 +52,16 @@ router.put("/:id", auth, (req, res) => {
   const { name} = req.body;
   //simple validation
   if (!name) {
-    return res.status(400).json({ msg: "please enter name field" });
+    return res.status(400).json({ msg: "Please enter name field!" });
+  }
+  if(name.length<3){
+    return res.status(400).json({ msg: "Name field must be at least 3 characters!" });
+  }else if (name.length>30) {
+    return res.status(400).json({ msg: "Name field must be less than 30 characters!" });
   }
   /* Project.findById(req.params.id)
   .then((project) => project.updateOne({ "name" : req.body.name,"description":req.body.description }).then(() => res.json(project))); */
-  Project.findByIdAndUpdate(req.params.id,req.body).then(() => res.json(req.body));
+  Dm.findByIdAndUpdate(req.params.id,req.body).then(() => res.json(req.body));
   
 });
 
