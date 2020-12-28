@@ -19,7 +19,7 @@ const initialState = {
   selecteddm: null,
 };
 
-export default function (state = initialState, action) {
+const dmReducer=(state=initialState, action)=>{
   switch (action.type) {
     case GET_DMS:
       return {
@@ -88,3 +88,4 @@ export default function (state = initialState, action) {
       return state;
   }
 }
+export default (dmReducer);
