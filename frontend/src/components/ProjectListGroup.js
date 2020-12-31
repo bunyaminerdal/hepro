@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Button, InputGroup, InputGroupAddon, Input } from "reactstrap";
-import { Link } from "react-router-dom";
 
 export default class ProjectListGroup extends Component {
   render() {

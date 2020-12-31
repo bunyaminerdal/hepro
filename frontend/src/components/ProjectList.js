@@ -9,9 +9,9 @@ import {
 } from "../actions/projectActions";
 import { selectedProject } from "../actions/authActions";
 import PropTypes from "prop-types";
-import ProjectModal from "../components/projectModal";
 import ProjectEditForm from "./ProjectEditForm";
 import ProjectListGroup from "./ProjectListGroup";
+import ProjectAddForm from "./ProjectAddForm";
 
 class ProjectList extends Component {
   static propTypes = {
@@ -40,7 +40,12 @@ class ProjectList extends Component {
   };
 
   render() {
-    const { projects, projectediting, selectedproject } = this.props.project;
+    const {
+      projects,
+      projectediting,
+      selectedproject,
+      projectadding,
+    } = this.props.project;
     return (
       <Container>
         <ListGroup className="mt-3">
@@ -52,7 +57,11 @@ class ProjectList extends Component {
           >
             Add Project
           </Button>
-          <ProjectModal />
+          {projectadding ? (
+            <ListGroupItem>
+              <ProjectAddForm />
+            </ListGroupItem>
+          ) : null}
 
           {projects.map((project) => (
             <ListGroupItem key={project._id}>
