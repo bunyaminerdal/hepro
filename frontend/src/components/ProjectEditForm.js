@@ -70,7 +70,7 @@ class ProjectEditForm extends Component {
                 color="info"
                 size="sm"
                 onClick={this.handleSubmit}
-                invalid={this.state.description.length > 100}
+                style={{ width: "90px" }}
               >
                 DONE
               </Button>
@@ -80,6 +80,7 @@ class ProjectEditForm extends Component {
                 color="warning"
                 size="sm"
                 onClick={this.handleCancel}
+                style={{ width: "90px" }}
               >
                 CANCEL
               </Button>
@@ -99,6 +100,7 @@ class ProjectEditForm extends Component {
               value={this.state.description}
               onChange={this.handleChange}
               style={{ height: "38px" }}
+              invalid={this.state.description.length > 100}
             ></Input>
             <InputGroupAddon addonType="append"></InputGroupAddon>
           </InputGroup>

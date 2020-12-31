@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, InputGroup, InputGroupAddon } from "reactstrap";
+import { Button, InputGroup, InputGroupAddon, Input } from "reactstrap";
 import { Link } from "react-router-dom";
 
 export default class ProjectListGroup extends Component {
@@ -15,8 +15,9 @@ export default class ProjectListGroup extends Component {
               onClick={() => {
                 this.props.onDeleteClick(this.props.project._id);
               }}
+              style={{ width: "90px" }}
             >
-              &times;
+              DELETE
             </Button>
             <span> </span>
             <Button
@@ -26,20 +27,28 @@ export default class ProjectListGroup extends Component {
               onClick={() => {
                 this.props.onEditClick(this.props.project._id);
               }}
+              style={{ width: "90px" }}
             >
               EDIT
             </Button>
+            <Button
+              outline
+              color="secondary"
+              onClick={() => {
+                this.props.onSelectClick(this.props.project._id);
+              }}
+              style={{ width: "370px" }}
+            >
+              {this.props.project.name}
+            </Button>
           </InputGroupAddon>
-          <Link
-            to="#"
-            className="ml-3 mr-3"
-            onClick={() => {
-              this.props.onSelectClick(this.props.project._id);
-            }}
-          >
-            {this.props.project.name}
-          </Link>
-          | {this.props.project.description}
+
+          <Input
+            type="textarea"
+            value={this.props.project.description}
+            disabled
+            style={{ height: "38px" }}
+          ></Input>
         </InputGroup>
       </div>
     );
