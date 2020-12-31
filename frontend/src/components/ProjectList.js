@@ -1,36 +1,37 @@
 import React, { Component } from "react";
 import { Container, ListGroup, ListGroupItem, Button } from "reactstrap";
-import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { connect } from "react-redux";
-import { getProjects, deleteProject,projectEditing,projectAdding } from "../actions/projectActions";
+import {
+  getProjects,
+  deleteProject,
+  projectEditing,
+  projectAdding,
+} from "../actions/projectActions";
 import { selectedProject } from "../actions/authActions";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
 import ProjectModal from "../components/projectModal";
-import ProjectEditModal from "../components/ProjectEditModal";
+import ProjectEditForm from "./ProjectEditForm";
+import ProjectListGroup from "./ProjectListGroup";
 
 class ProjectList extends Component {
-  
   static propTypes = {
-    project: PropTypes.object.isRequired,    
+    project: PropTypes.object.isRequired,
     isAuthenticated: PropTypes.bool,
   };
   componentDidMount() {
     if (this.props.isAuthenticated) {
       this.props.getProjects();
-
     }
-    
   }
 
   onDeleteClick = (id) => {
     this.props.deleteProject(id);
   };
 
-  onEditClick = (id) => {    
+  onEditClick = (id) => {
     this.props.projectEditing(id);
   };
-  onAddClick = () => {    
+  onAddClick = () => {
     this.props.projectAdding();
   };
 
@@ -39,11 +40,11 @@ class ProjectList extends Component {
   };
 
   render() {
-    const { projects} = this.props.project;
+    const { projects, projectediting, selectedproject } = this.props.project;
     return (
       <Container>
         <ListGroup className="mt-3">
-        <Button
+          <Button
             color="dark"
             //style={{ marginBottom: "2rem" }}
             onClick={this.onAddClick.bind(this)}
@@ -51,41 +52,22 @@ class ProjectList extends Component {
           >
             Add Project
           </Button>
-          <TransitionGroup>
-          
-            <ProjectModal  />
-            <ProjectEditModal/>
-            {projects.map(({ _id, name, description }) => (
-              <CSSTransition key={_id} timeout={500} classNames="fade">
-                <ListGroupItem>
-                  <Button
-                    className="remove-btn"
-                    color="danger"
-                    size="sm"
-                    onClick={this.onDeleteClick.bind(this, _id)}
-                  >
-                    &times;
-                  </Button>
-                  <span>  </span>
-                  <Button
-                    className="edit-btn"
-                    color="warning"
-                    size="sm"
-                    onClick={this.onEditClick.bind(this, _id)}
-                  >
-                    EDIT
-                  </Button>
-                  <Link to="#"
-                    className="ml-3 mr-3"
-                    onClick={this.onSelectClick.bind(this, _id)}
-                  >
-                    {name}
-                  </Link>
-                  | {description}
-                </ListGroupItem>
-              </CSSTransition>
-            ))}
-          </TransitionGroup>
+          <ProjectModal />
+
+          {projects.map((project) => (
+            <ListGroupItem key={project._id}>
+              {projectediting && selectedproject._id === project._id ? (
+                <ProjectEditForm project={project} />
+              ) : (
+                <ProjectListGroup
+                  project={project}
+                  onDeleteClick={this.onDeleteClick}
+                  onEditClick={this.onEditClick}
+                  onSelectClick={this.onSelectClick}
+                />
+              )}
+            </ListGroupItem>
+          ))}
         </ListGroup>
       </Container>
     );
@@ -94,13 +76,13 @@ class ProjectList extends Component {
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
-  project: state.project,  
+  project: state.project,
 });
 
 export default connect(mapStateToProps, {
   getProjects,
   deleteProject,
-  selectedProject,  
+  selectedProject,
   projectEditing,
   projectAdding,
 })(ProjectList);
