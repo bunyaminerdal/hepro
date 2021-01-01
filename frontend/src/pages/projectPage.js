@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import ProjectList from "../components/ProjectList";
-import DmList from "../components/DmList";
+import ProjectMain from "../components/ProjectMain";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
@@ -28,7 +28,7 @@ class ProjectPage extends Component {
         ) : null}
         {isAuthenticated && project !== null ? (
           <div>
-            <DmList />
+            <ProjectMain />
           </div>
         ) : null}
       </div>

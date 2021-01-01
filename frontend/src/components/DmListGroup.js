@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { Button, InputGroup, InputGroupAddon, Input } from "reactstrap";
+import { Button, InputGroup, InputGroupAddon } from "reactstrap";
 
-export default class ProjectListGroup extends Component {
+export default class DmListGroup extends Component {
   render() {
     return (
       <div>
@@ -12,11 +12,11 @@ export default class ProjectListGroup extends Component {
               color="danger"
               size="sm"
               onClick={() => {
-                this.props.onDeleteClick(this.props.project._id);
+                this.props.onDeleteClick(this.props.dm._id);
               }}
-              style={{ width: "90px" }}
+              //style={{ width: "90px" }}
             >
-              DELETE
+              X
             </Button>
             <span> </span>
             <Button
@@ -24,30 +24,23 @@ export default class ProjectListGroup extends Component {
               color="warning"
               size="sm"
               onClick={() => {
-                this.props.onEditClick(this.props.project._id);
+                this.props.onEditClick(this.props.dm._id);
               }}
-              style={{ width: "90px" }}
+              //style={{ width: "90px" }}
             >
-              EDIT
+              E
             </Button>
             <Button
               outline
               color="secondary"
-              onClick={() => {
-                this.props.onSelectClick(this.props.project._id);
-              }}
+              /* onClick={() => {
+                this.props.onSelectClick(this.props.dm._id);
+              }} */
               style={{ width: "270px" }}
             >
-              {this.props.project.name}
+              {this.props.dm.name}
             </Button>
           </InputGroupAddon>
-
-          <Input
-            type="textarea"
-            value={this.props.project.description}
-            disabled
-            style={{ height: "38px" }}
-          ></Input>
         </InputGroup>
       </div>
     );
