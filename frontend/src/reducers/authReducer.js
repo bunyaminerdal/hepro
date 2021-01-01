@@ -17,11 +17,11 @@ const initialState = {
   token: localStorage.getItem("token"),
   project: localStorage.getItem("project"),
   dm: localStorage.getItem("dm"),
-  isAuthenticated: null,
+  isAuthenticated: false,
   isLoading: false,
   user: null,
 };
-const authReducer=(state=initialState, action)=>{
+const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case USER_LOADING:
       return {
@@ -87,5 +87,5 @@ const authReducer=(state=initialState, action)=>{
     default:
       return state;
   }
-}
-export default (authReducer);
+};
+export default authReducer;

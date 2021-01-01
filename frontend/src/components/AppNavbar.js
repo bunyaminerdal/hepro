@@ -43,15 +43,19 @@ class AppNavbar extends Component {
     return (
       <div>
         <Navbar color="dark" dark expand="md">
-          <NavbarBrand href="/">Home</NavbarBrand>
+          <NavbarBrand>HEPRO</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="mr-auto" navbar>
+              <NavbarText className="mr-2">
+                <Link color="dark" to="/">
+                  Home
+                </Link>
+              </NavbarText>
               {isAuthenticated ? (
                 <NavbarText>
                   <Link
                     color="dark"
-                    
                     to="/project"
                     onClick={() => {
                       this.props.deselectProject();
@@ -71,7 +75,10 @@ class AppNavbar extends Component {
               ) : null}
               {isAuthenticated ? (
                 <NavbarText>
-                  <Link to="#" onClick={this.handleClick.bind(this)}> Sign out </Link>
+                  <Link to="#" onClick={this.handleClick.bind(this)}>
+                    {" "}
+                    Sign out{" "}
+                  </Link>
                 </NavbarText>
               ) : null}
               {!isAuthenticated ? (
@@ -101,5 +108,4 @@ export default connect(mapStateToProps, {
   unLoadProjects,
   unLoadDms,
   deselectProject,
-
 })(AppNavbar);
