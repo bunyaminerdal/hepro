@@ -14,7 +14,6 @@ export default class DmListGroup extends Component {
               onClick={() => {
                 this.props.onDeleteClick(this.props.dm._id);
               }}
-              //style={{ width: "90px" }}
             >
               X
             </Button>
@@ -26,7 +25,6 @@ export default class DmListGroup extends Component {
               onClick={() => {
                 this.props.onEditClick(this.props.dm._id);
               }}
-              //style={{ width: "90px" }}
             >
               E
             </Button>

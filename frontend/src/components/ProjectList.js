@@ -6,6 +6,7 @@ import {
   deleteProject,
   projectEditing,
   projectAdding,
+  unLoadProjects,
 } from "../actions/projectActions";
 import { selectedProject } from "../actions/authActions";
 import PropTypes from "prop-types";
@@ -36,6 +37,7 @@ class ProjectList extends Component {
   };
 
   onSelectClick = (id) => {
+    this.props.unLoadProjects();
     this.props.selectedProject(id);
   };
 
@@ -94,4 +96,5 @@ export default connect(mapStateToProps, {
   selectedProject,
   projectEditing,
   projectAdding,
+  unLoadProjects,
 })(ProjectList);

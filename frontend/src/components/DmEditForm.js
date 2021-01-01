@@ -68,7 +68,6 @@ class DmEditForm extends Component {
                 color="info"
                 size="sm"
                 onClick={this.handleSubmit}
-                //style={{ width: "90px" }}
               >
                 OK
               </Button>
@@ -78,7 +77,6 @@ class DmEditForm extends Component {
                 color="warning"
                 size="sm"
                 onClick={this.handleCancel}
-                //style={{ width: "90px" }}
               >
                 C
               </Button>

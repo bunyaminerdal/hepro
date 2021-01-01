@@ -19,19 +19,25 @@ const initialState = {
   selectedproject: null,
 };
 
-const projectReducer=(state=initialState, action)=>{
+const projectReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_PROJECTS:
       return {
         ...state,
         projects: action.payload,
-        loading: false,        
+        loading: false,
+        projectadding: false,
+        projectediting: false,
+        selectedproject: null,
       };
     case UNLOAD_PROJECTS:
       return {
         ...state,
         projects: [],
         loading: false,
+        projectadding: false,
+        projectediting: false,
+        selectedproject: null,
       };
     case DELETE_PROJECT:
       return {
@@ -43,9 +49,9 @@ const projectReducer=(state=initialState, action)=>{
     case EDIT_PROJECT:
       return {
         ...state,
-        projects: state.projects.map(project => {
-          return project._id === action.payload._id ?  action.payload : project}
-      ),
+        projects: state.projects.map((project) => {
+          return project._id === action.payload._id ? action.payload : project;
+        }),
         projectediting: false,
         selectedproject: null,
       };
@@ -53,7 +59,7 @@ const projectReducer=(state=initialState, action)=>{
       return {
         ...state,
         projects: [action.payload, ...state.projects],
-        projectadding:false,
+        projectadding: false,
       };
     case PROJECTS_LOADING:
       return {
@@ -72,7 +78,6 @@ const projectReducer=(state=initialState, action)=>{
       return {
         ...state,
         projectadding: true,
-        
       };
 
     case PROJECT_EDITED:
@@ -84,12 +89,11 @@ const projectReducer=(state=initialState, action)=>{
     case PROJECT_ADDED:
       return {
         ...state,
-        projectadding: false,        
+        projectadding: false,
       };
-    
 
     default:
       return state;
   }
-}
+};
 export default projectReducer;
