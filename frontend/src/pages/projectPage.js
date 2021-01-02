@@ -12,7 +12,7 @@ class ProjectPage extends Component {
 
   render() {
     const { isAuthenticated, project } = this.props.auth;
-
+    //burada isauth null geliyor böylece sayfa yenilenince direct redirect yapmıyor
     if (isAuthenticated !== null) {
       if (!isAuthenticated) {
         return <Redirect to="/" />;
