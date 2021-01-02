@@ -8,8 +8,8 @@ import {
   Alert,
 } from "reactstrap";
 import { connect } from "react-redux";
-import { addProject, projectAdded } from "../actions/projectActions";
-import { clearErrors } from "../actions/errorActions";
+import { addProject, projectAdded } from "../../actions/projectActions";
+import { clearErrors } from "../../actions/errorActions";
 
 class ProjectAddForm extends Component {
   state = {

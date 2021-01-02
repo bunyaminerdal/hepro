@@ -8,30 +8,28 @@ import {
   Alert,
 } from "reactstrap";
 import { connect } from "react-redux";
-import { editProject, projectEdited } from "../actions/projectActions";
-import { clearErrors } from "../actions/errorActions";
+import { editDm, dmEdited } from "../../actions/dmActions";
+import { clearErrors } from "../../actions/errorActions";
 
-class ProjectEditForm extends Component {
+class DmEditForm extends Component {
   state = {
-    name: this.props.project.name,
-    description: this.props.project.description,
+    name: this.props.dm.name,
     msg: null,
   };
   handleSubmit = (e) => {
     e.preventDefault();
 
-    const editingProject = {
+    const editingDm = {
       //ownerid kullanılıyor mu bak
-      _id: this.props.project._id,
-      ownerId: this.props.project.ownerId,
+      _id: this.props.dm._id,
+      ownerId: this.props.dm.ownerId,
       name: this.state.name.trim(),
-      description: this.state.description.trim(),
-      date: this.props.project.date,
-      __v: this.props.project.__v,
+      date: this.props.dm.date,
+      __v: this.props.dm.__v,
     };
 
     //add item via add item action
-    this.props.editProject(this.props.project._id, editingProject);
+    this.props.editDm(this.props.dm._id, editingDm);
   };
 
   handleChange = (e) => {
@@ -44,14 +42,14 @@ class ProjectEditForm extends Component {
   };
   handleCancel = (e) => {
     this.props.clearErrors();
-    this.props.projectEdited();
+    this.props.dmEdited();
   };
 
   componentDidUpdate(prevProps) {
     const { error } = this.props;
     if (error !== prevProps.error) {
       //check for register error
-      if (error.id === "PROJECT_EDIT_FAIL") {
+      if (error.id === "DM_EDIT_FAIL") {
         this.setState({ msg: error.msg.msg });
       } else {
         this.setState({ msg: null });
@@ -70,9 +68,8 @@ class ProjectEditForm extends Component {
                 color="info"
                 size="sm"
                 onClick={this.handleSubmit}
-                style={{ width: "90px" }}
               >
-                DONE
+                OK
               </Button>
               <span> </span>
               <Button
@@ -80,9 +77,8 @@ class ProjectEditForm extends Component {
                 color="warning"
                 size="sm"
                 onClick={this.handleCancel}
-                style={{ width: "90px" }}
               >
-                CANCEL
+                C
               </Button>
             </InputGroupAddon>
             <Input
@@ -94,14 +90,7 @@ class ProjectEditForm extends Component {
                 this.state.name.length < 3 || this.state.name.length > 30
               }
             ></Input>
-            <Input
-              name="description"
-              type="textarea"
-              value={this.state.description}
-              onChange={this.handleChange}
-              style={{ height: "38px" }}
-              invalid={this.state.description.length > 100}
-            ></Input>
+
             <InputGroupAddon addonType="append"></InputGroupAddon>
           </InputGroup>
 
@@ -118,7 +107,7 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, {
-  editProject,
-  projectEdited,
+  editDm,
+  dmEdited,
   clearErrors,
-})(ProjectEditForm);
+})(DmEditForm);

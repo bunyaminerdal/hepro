@@ -8,8 +8,8 @@ import {
   Alert,
 } from "reactstrap";
 import { connect } from "react-redux";
-import { addDm, dmAdded } from "../actions/dmActions";
-import { clearErrors } from "../actions/errorActions";
+import { addDm, dmAdded } from "../../actions/dmActions";
+import { clearErrors } from "../../actions/errorActions";
 
 class DmAddForm extends Component {
   state = {

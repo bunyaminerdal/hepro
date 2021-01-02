@@ -51,13 +51,7 @@ class AppNavbar extends Component {
               </NavbarText>
               {isAuthenticated ? (
                 <NavbarText>
-                  <Link
-                    color="dark"
-                    to="/project"
-                    onClick={() => {
-                      this.props.unLoadDms();
-                    }}
-                  >
+                  <Link color="dark" to="/project">
                     My projects
                   </Link>
                 </NavbarText>

@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getDms, dmAdding, deleteDm, dmEditing } from "../actions/dmActions";
+import { selectedDm } from "../actions/authActions";
 import { ListGroup, ListGroupItem, Button, Row, Col } from "reactstrap";
-import DmAddForm from "./DmAddForm";
-import DmEditForm from "./DmEditForm";
-import DmListGroup from "./DmListGroup";
+import DmAddForm from "./dmComponents/DmAddForm";
+import DmEditForm from "./dmComponents/DmEditForm";
+import DmListGroup from "./dmComponents/DmListGroup";
 import Spinner from "reactstrap/lib/Spinner";
 
 export class ProjectMain extends Component {
@@ -22,8 +23,13 @@ export class ProjectMain extends Component {
   onAddClick = () => {
     this.props.dmAdding();
   };
+  onSelectClick = (id) => {
+    if (this.props.auth.dm !== id) {
+      this.props.selectedDm(id);
+    }
+  };
   render() {
-    const { project } = this.props.auth;
+    const { dm } = this.props.auth;
     const { dms, dmediting, dmadding, selecteddm, loading } = this.props.dm;
     return (
       <div className="mt-3 ml-3 mr-3">
@@ -74,7 +80,7 @@ export class ProjectMain extends Component {
                   : null}
               </ListGroup>
             </Col>
-            <Col xs="auto">{project}</Col>
+            <Col xs="auto">{dm}</Col>
           </Row>
         )}
       </div>
@@ -92,4 +98,5 @@ export default connect(mapStateToProps, {
   dmAdding,
   deleteDm,
   dmEditing,
+  selectedDm,
 })(ProjectMain);

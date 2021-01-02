@@ -6,8 +6,8 @@ import {
   deleteProject,
   projectEditing,
   projectAdding,
-} from "../actions/projectActions";
-import { selectedProject } from "../actions/authActions";
+} from "../../actions/projectActions";
+import { selectedProject } from "../../actions/authActions";
 import PropTypes from "prop-types";
 import ProjectEditForm from "./ProjectEditForm";
 import ProjectListGroup from "./ProjectListGroup";
