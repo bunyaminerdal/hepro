@@ -6,13 +6,14 @@ import {
   deleteProject,
   projectEditing,
   projectAdding,
-  unLoadProjects,
 } from "../actions/projectActions";
 import { selectedProject } from "../actions/authActions";
 import PropTypes from "prop-types";
 import ProjectEditForm from "./ProjectEditForm";
 import ProjectListGroup from "./ProjectListGroup";
 import ProjectAddForm from "./ProjectAddForm";
+import Spinner from "reactstrap/lib/Spinner";
+import Row from "reactstrap/lib/Row";
 
 class ProjectList extends Component {
   static propTypes = {
@@ -37,7 +38,6 @@ class ProjectList extends Component {
   };
 
   onSelectClick = (id) => {
-    //this.props.unLoadProjects();
     this.props.selectedProject(id);
   };
 
@@ -47,39 +47,52 @@ class ProjectList extends Component {
       projectediting,
       selectedproject,
       projectadding,
+      loading,
     } = this.props.project;
     return (
       <Container>
-        <ListGroup className="mt-3">
-          <Button
-            color="dark"
-            //style={{ marginBottom: "2rem" }}
-            onClick={this.onAddClick.bind(this)}
-            block
-          >
-            Add Project
-          </Button>
-          {projectadding ? (
-            <ListGroupItem>
-              <ProjectAddForm />
-            </ListGroupItem>
-          ) : null}
+        {loading ? (
+          <Row className="mt-3">
+            <Spinner type="grow" color="primary" />
+            <Spinner type="grow" color="secondary" />
+            <Spinner type="grow" color="success" />
+            <Spinner type="grow" color="danger" />
+            <Spinner type="grow" color="warning" />
+            <Spinner type="grow" color="info" />
+            <h3 className="ml-3">Loading...</h3>
+          </Row>
+        ) : (
+          <ListGroup className="mt-3">
+            <Button
+              color="dark"
+              //style={{ marginBottom: "2rem" }}
+              onClick={this.onAddClick.bind(this)}
+              block
+            >
+              Add Project
+            </Button>
+            {projectadding ? (
+              <ListGroupItem>
+                <ProjectAddForm />
+              </ListGroupItem>
+            ) : null}
 
-          {projects.map((project) => (
-            <ListGroupItem key={project._id}>
-              {projectediting && selectedproject._id === project._id ? (
-                <ProjectEditForm project={project} />
-              ) : (
-                <ProjectListGroup
-                  project={project}
-                  onDeleteClick={this.onDeleteClick}
-                  onEditClick={this.onEditClick}
-                  onSelectClick={this.onSelectClick}
-                />
-              )}
-            </ListGroupItem>
-          ))}
-        </ListGroup>
+            {projects.map((project) => (
+              <ListGroupItem key={project._id}>
+                {projectediting && selectedproject._id === project._id ? (
+                  <ProjectEditForm project={project} />
+                ) : (
+                  <ProjectListGroup
+                    project={project}
+                    onDeleteClick={this.onDeleteClick}
+                    onEditClick={this.onEditClick}
+                    onSelectClick={this.onSelectClick}
+                  />
+                )}
+              </ListGroupItem>
+            ))}
+          </ListGroup>
+        )}
       </Container>
     );
   }
@@ -96,5 +109,4 @@ export default connect(mapStateToProps, {
   selectedProject,
   projectEditing,
   projectAdding,
-  unLoadProjects,
 })(ProjectList);
