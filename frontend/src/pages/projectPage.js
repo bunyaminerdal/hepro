@@ -18,7 +18,6 @@ class ProjectPage extends Component {
         return <Redirect to="/" />;
       }
     }
-
     return (
       <div>
         {isAuthenticated && project === null ? (
