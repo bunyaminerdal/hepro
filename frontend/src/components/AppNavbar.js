@@ -1,9 +1,6 @@
 import React, { Component } from "react";
-
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-
-import { deselectProject } from "../actions/authActions";
 import { logout } from "../actions/authActions";
 import { unLoadProjects } from "../actions/projectActions";
 import { unLoadDms } from "../actions/dmActions";
@@ -58,7 +55,6 @@ class AppNavbar extends Component {
                     color="dark"
                     to="/project"
                     onClick={() => {
-                      this.props.deselectProject();
                       this.props.unLoadDms();
                     }}
                   >
@@ -107,5 +103,4 @@ export default connect(mapStateToProps, {
   logout,
   unLoadProjects,
   unLoadDms,
-  deselectProject,
 })(AppNavbar);
