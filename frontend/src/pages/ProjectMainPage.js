@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import ProjectList from "../components/ProjectList";
+import ProjectMain from "../components/ProjectMain";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 
-class ProjectPage extends Component {
+class ProjectMainPage extends Component {
   static propTypes = {
     auth: PropTypes.object.isRequired,
   };
@@ -21,7 +21,7 @@ class ProjectPage extends Component {
       <div>
         {isAuthenticated ? (
           <div>
-            <ProjectList />
+            <ProjectMain projectId={this.props.match.params.id} />
           </div>
         ) : null}
       </div>
@@ -33,4 +33,4 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps, null)(ProjectPage);
+export default connect(mapStateToProps, null)(ProjectMainPage);

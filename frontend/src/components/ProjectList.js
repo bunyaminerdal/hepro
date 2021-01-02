@@ -37,7 +37,7 @@ class ProjectList extends Component {
   };
 
   onSelectClick = (id) => {
-    this.props.unLoadProjects();
+    //this.props.unLoadProjects();
     this.props.selectedProject(id);
   };
 

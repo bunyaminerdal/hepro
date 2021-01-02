@@ -8,9 +8,8 @@ import DmListGroup from "./DmListGroup";
 
 export class ProjectMain extends Component {
   componentDidMount() {
-    const { project } = this.props.auth;
-    if (project) {
-      this.props.getDms(project);
+    if (this.props.projectId) {
+      this.props.getDms(this.props.projectId);
     }
   }
   onDeleteClick = (id) => {
