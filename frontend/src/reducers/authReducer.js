@@ -17,7 +17,7 @@ const initialState = {
   token: localStorage.getItem("token"),
   project: localStorage.getItem("project"),
   dm: localStorage.getItem("dm"),
-  isAuthenticated: false,
+  isAuthenticated: null,
   isLoading: false,
   user: null,
 };
