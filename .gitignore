@@ -25,3 +25,4 @@ yarn-error.log*
 notlar.txt
 frontend/debug.log
 frontend/.eslintcache
+frontend/.eslintcache
