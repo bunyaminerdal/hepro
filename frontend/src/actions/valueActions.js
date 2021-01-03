@@ -58,8 +58,8 @@ export const addVal = (val, projectId, dmId, criteriaId, alternativeId) => (
 ) => {
   axios
     .post(
-      `/api/values/${projectId}/${dmId}/${criteriaId}/${alternativeId}`,
-      val,
+      `/api/values/${projectId}`,
+      [val, dmId, criteriaId, alternativeId],
       tokenConfig(getState)
     )
     .then((res) =>
@@ -70,7 +70,7 @@ export const addVal = (val, projectId, dmId, criteriaId, alternativeId) => (
     )
     .catch((err) =>
       dispatch(
-        returnErrors(err.response.data, err.response.status, "DM_ADD_FAIL")
+        returnErrors(err.response.data, err.response.status, "VAL_ADD_FAIL")
       )
     );
 };

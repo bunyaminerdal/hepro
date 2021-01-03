@@ -17,8 +17,9 @@ router.get("/:id", auth, (req, res) => {
 // @route POST api/items
 // @desc Create a item
 // @access Private (2.parametre olarak auth ekledik)
-router.post("/:id/:dmId/:criteriaId/:alternativeId", auth, (req, res) => {
-  const { input } = req.body;
+router.post("/:id", auth, (req, res) => {
+  const input = req.body[0];
+
   //simple validation
   if (!input) {
     return res.status(400).json({ msg: "Please enter input field!" });
@@ -31,10 +32,10 @@ router.post("/:id/:dmId/:criteriaId/:alternativeId", auth, (req, res) => {
 
   const newVal = new Value({
     ownerId: req.params.id,
-    dmId: req.params.dmId,
-    criteriaId: req.params.criteriaId,
-    alternativeId: req.params.alternativeId,
-    input: req.body.input,
+    dmId: req.body[1],
+    criteriaId: req.body[2],
+    alternativeId: req.body[3],
+    input: req.body[0],
   });
 
   newVal.save().then((val) => res.json(val));

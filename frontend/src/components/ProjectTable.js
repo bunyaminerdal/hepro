@@ -24,6 +24,7 @@ import {
   deleteCrit,
   critEditing,
 } from "../actions/criteriaActions";
+import { getVals, addVal, valEditing } from "../actions/valueActions";
 import AltAddForm from "./altComponents/AltAddForm";
 import AltEditForm from "./altComponents/AltEditForm";
 import AltListGroup from "./altComponents/AltListGroup";
@@ -37,10 +38,66 @@ class ProjectTable extends Component {
   };
   componentDidMount() {
     if (this.props.auth.project) {
-      this.props.getAlts(this.props.auth.project);
       this.props.getCrits(this.props.auth.project);
+      this.props.getAlts(this.props.auth.project);
+      this.props.getVals(this.props.auth.project);
     }
   }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.dm.dms.length > prevProps.dm.dms.length) {
+      let difference = this.props.dm.dms.filter(
+        (x) => !prevProps.dm.dms.includes(x)
+      );
+
+      this.props.criteria.crits.forEach((crit) => {
+        this.props.alternative.alts.forEach((alt) => {
+          this.props.addVal(
+            "asd",
+            this.props.auth.project,
+            difference[0]._id,
+            crit._id,
+            alt._id
+          );
+        });
+      });
+    }
+    if (
+      this.props.alternative.alts.length > prevProps.alternative.alts.length
+    ) {
+      let difference1 = this.props.alternative.alts.filter(
+        (x) => !prevProps.alternative.alts.includes(x)
+      );
+      this.props.criteria.crits.forEach((crit) => {
+        this.props.dm.dms.forEach((dm) => {
+          this.props.addVal(
+            "asd",
+            this.props.auth.project,
+            dm._id,
+            crit._id,
+            difference1[0]._id
+          );
+        });
+      });
+    }
+    if (this.props.criteria.crits.length > prevProps.criteria.crits.length) {
+      let difference2 = this.props.criteria.crits.filter(
+        (x) => !prevProps.criteria.crits.includes(x)
+      );
+      this.props.alternative.alts.forEach((alt) => {
+        this.props.dm.dms.forEach((dm) => {
+          this.props.addVal(
+            "asd",
+            this.props.auth.project,
+            dm._id,
+            difference2[0]._id,
+            alt._id
+          );
+        });
+      });
+    }
+  }
+
   toggle = () => this.setState({ dropdownOpen: !this.state.dropdownOpen });
   onAltDeleteClick = (id) => {
     this.props.deleteAlt(id);
@@ -144,7 +201,7 @@ class ProjectTable extends Component {
                   <th>Criteria Name</th>
                   {crits !== null
                     ? crits.map((crit) => (
-                        <th scope="row">
+                        <th key={crit._id}>
                           {critediting && selectedcrit._id === crit._id ? (
                             <CritEditForm crit={crit} />
                           ) : (
@@ -162,7 +219,7 @@ class ProjectTable extends Component {
               <tbody>
                 {alts !== null
                   ? alts.map((alt) => (
-                      <tr>
+                      <tr key={alt._id}>
                         <th scope="row">
                           {altediting && selectedalt._id === alt._id ? (
                             <AltEditForm alt={alt} />
@@ -187,8 +244,10 @@ class ProjectTable extends Component {
 }
 const mapStateToProps = (state) => ({
   auth: state.auth,
+  dm: state.dm,
   alternative: state.alternative,
   criteria: state.criteria,
+  value: state.value,
 });
 
 export default connect(mapStateToProps, {
@@ -200,4 +259,7 @@ export default connect(mapStateToProps, {
   critAdding,
   deleteCrit,
   critEditing,
+  getVals,
+  valEditing,
+  addVal,
 })(ProjectTable);
