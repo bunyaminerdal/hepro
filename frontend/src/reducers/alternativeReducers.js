@@ -13,7 +13,7 @@ import {
 
 const initialState = {
   alts: [],
-  loading: false,
+  altloading: false,
   altediting: false,
   altadding: false,
   selectedalt: null,
@@ -25,7 +25,7 @@ const alternativeReducer = (state = initialState, action) => {
       return {
         ...state,
         alts: action.payload,
-        loading: false,
+        altloading: false,
         altadding: false,
         altediting: false,
         selectedalt: null,
@@ -34,7 +34,7 @@ const alternativeReducer = (state = initialState, action) => {
       return {
         ...state,
         alts: null,
-        loading: false,
+        altloading: false,
         altadding: false,
         altediting: false,
         selectedalt: null,
@@ -62,7 +62,7 @@ const alternativeReducer = (state = initialState, action) => {
     case ALTS_LOADING:
       return {
         ...state,
-        loading: true,
+        altloading: true,
       };
     case ALT_EDITING:
       return {

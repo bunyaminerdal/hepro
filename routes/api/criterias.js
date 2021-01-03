@@ -3,15 +3,15 @@ const router = express.Router();
 const auth = require("../../middleware/auth");
 
 //Item Model
-const Dm = require("../../models/criteria");
+const Criteria = require("../../models/criteria");
 
 // @route GET api/items
 // @desc GET all Items
 // @access Public
 router.get("/:id", auth, (req, res) => {
-  Dm.find({ ownerId: req.params.id })
+  Criteria.find({ ownerId: req.params.id })
     .sort({ date: -1 })
-    .then((dms) => res.json(dms));
+    .then((crits) => res.json(crits));
 });
 
 // @route POST api/items
@@ -33,20 +33,20 @@ router.post("/:id", auth, (req, res) => {
       .json({ msg: "Name field must be less than 30 characters!" });
   }
 
-  const newDm = new Dm({
+  const newCrit = new Criteria({
     ownerId: req.params.id,
     name: req.body.name,
   });
 
-  newDm.save().then((dm) => res.json(dm));
+  newCrit.save().then((crit) => res.json(crit));
 });
 
 // @route DELETE api/items/:id
 // @desc Delete a item
 // @access Private
 router.delete("/:id", auth, (req, res) => {
-  Dm.findById(req.params.id)
-    .then((dm) => dm.remove().then(() => res.json({ success: true })))
+  Criteria.findById(req.params.id)
+    .then((crit) => crit.remove().then(() => res.json({ success: true })))
     .catch((err) => res.status(404).json({ success: false }));
 });
 // @route UPDATE api/items/:id
@@ -69,7 +69,9 @@ router.put("/:id", auth, (req, res) => {
   }
   /* Project.findById(req.params.id)
   .then((project) => project.updateOne({ "name" : req.body.name,"description":req.body.description }).then(() => res.json(project))); */
-  Dm.findByIdAndUpdate(req.params.id, req.body).then(() => res.json(req.body));
+  Criteria.findByIdAndUpdate(req.params.id, req.body).then(() =>
+    res.json(req.body)
+  );
 });
 
 module.exports = router;

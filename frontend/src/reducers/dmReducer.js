@@ -13,7 +13,7 @@ import {
 
 const initialState = {
   dms: [],
-  loading: false,
+  dmloading: false,
   dmediting: false,
   dmadding: false,
   selecteddm: null,
@@ -25,7 +25,7 @@ const dmReducer = (state = initialState, action) => {
       return {
         ...state,
         dms: action.payload,
-        loading: false,
+        dmloading: false,
         dmadding: false,
         dmediting: false,
         selecteddm: null,
@@ -34,7 +34,7 @@ const dmReducer = (state = initialState, action) => {
       return {
         ...state,
         dms: null,
-        loading: false,
+        dmloading: false,
         dmadding: false,
         dmediting: false,
         selecteddm: null,
@@ -62,7 +62,7 @@ const dmReducer = (state = initialState, action) => {
     case DMS_LOADING:
       return {
         ...state,
-        loading: true,
+        dmloading: true,
       };
     case DM_EDITING:
       return {

@@ -31,10 +31,10 @@ export class ProjectMain extends Component {
   };
   render() {
     const { dm } = this.props.auth;
-    const { dms, dmediting, dmadding, selecteddm, loading } = this.props.dm;
+    const { dms, dmediting, dmadding, selecteddm, dmloading } = this.props.dm;
     return (
       <div className="mt-3 ml-3 mr-3">
-        {loading ? (
+        {dmloading ? (
           <Row>
             <Spinner type="grow" color="primary" />
             <Spinner type="grow" color="secondary" />

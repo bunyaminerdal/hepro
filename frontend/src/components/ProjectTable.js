@@ -18,9 +18,18 @@ import {
   deleteAlt,
   altEditing,
 } from "../actions/alternativeActions";
+import {
+  getCrits,
+  critAdding,
+  deleteCrit,
+  critEditing,
+} from "../actions/criteriaActions";
 import AltAddForm from "./altComponents/AltAddForm";
 import AltEditForm from "./altComponents/AltEditForm";
 import AltListGroup from "./altComponents/AltListGroup";
+import CritAddForm from "./critComponents/CritAddForm";
+import CritListGroup from "./critComponents/CritListGroup";
+import CritEditForm from "./critComponents/CritEditForm";
 
 class ProjectTable extends Component {
   state = {
@@ -29,6 +38,7 @@ class ProjectTable extends Component {
   componentDidMount() {
     if (this.props.auth.project) {
       this.props.getAlts(this.props.auth.project);
+      this.props.getCrits(this.props.auth.project);
     }
   }
   toggle = () => this.setState({ dropdownOpen: !this.state.dropdownOpen });
@@ -41,20 +51,36 @@ class ProjectTable extends Component {
   onAltAddClick = () => {
     this.props.altAdding();
   };
+  onCritDeleteClick = (id) => {
+    this.props.deleteCrit(id);
+  };
+  onCritEditClick = (id) => {
+    this.props.critEditing(id);
+  };
+  onCritAddClick = () => {
+    this.props.critAdding();
+  };
   render() {
     const {
       alts,
       altediting,
       altadding,
       selectedalt,
-      loading,
+      altloading,
     } = this.props.alternative;
+    const {
+      crits,
+      critediting,
+      critadding,
+      selectedcrit,
+      critloading,
+    } = this.props.criteria;
     return (
       <div>
         <Row>
           <ButtonToolbar>
             <ButtonGroup>
-              <Button outline color="secondary">
+              <Button outline color="secondary" onClick={this.onCritAddClick}>
                 K+
               </Button>
             </ButtonGroup>
@@ -95,7 +121,12 @@ class ProjectTable extends Component {
             <AltAddForm />
           </Row>
         ) : null}
-        {loading ? (
+        {critadding ? (
+          <Row>
+            <CritAddForm />
+          </Row>
+        ) : null}
+        {altloading || critloading ? (
           <Row>
             <Spinner type="grow" color="primary" />
             <Spinner type="grow" color="secondary" />
@@ -111,15 +142,21 @@ class ProjectTable extends Component {
               <thead>
                 <tr>
                   <th>Kriter Adı</th>
-                </tr>
-                <tr>
-                  <th>Kriter Birimi</th>
-                </tr>
-                <tr>
-                  <th>Kriter Yönü</th>
-                </tr>
-                <tr>
-                  <th>Kriter Ağırlığı</th>
+                  {crits !== null
+                    ? crits.map((crit) => (
+                        <th scope="row">
+                          {critediting && selectedcrit._id === crit._id ? (
+                            <CritEditForm crit={crit} />
+                          ) : (
+                            <CritListGroup
+                              crit={crit}
+                              onDeleteClick={this.onCritDeleteClick}
+                              onEditClick={this.onCritEditClick}
+                            />
+                          )}
+                        </th>
+                      ))
+                    : null}
                 </tr>
               </thead>
               <tbody>
@@ -151,6 +188,7 @@ class ProjectTable extends Component {
 const mapStateToProps = (state) => ({
   auth: state.auth,
   alternative: state.alternative,
+  criteria: state.criteria,
 });
 
 export default connect(mapStateToProps, {
@@ -158,4 +196,8 @@ export default connect(mapStateToProps, {
   altAdding,
   deleteAlt,
   altEditing,
+  getCrits,
+  critAdding,
+  deleteCrit,
+  critEditing,
 })(ProjectTable);
