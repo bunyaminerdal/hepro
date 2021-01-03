@@ -18,6 +18,9 @@ import {
   deleteAlt,
   altEditing,
 } from "../actions/alternativeActions";
+import AltAddForm from "./altComponents/AltAddForm";
+import AltEditForm from "./altComponents/AltEditForm";
+import AltListGroup from "./altComponents/AltListGroup";
 
 class ProjectTable extends Component {
   state = {
@@ -54,16 +57,10 @@ class ProjectTable extends Component {
               <Button outline color="secondary">
                 K+
               </Button>
-              <Button outline color="secondary">
-                K-
-              </Button>
             </ButtonGroup>
             <ButtonGroup>
               <Button outline color="secondary" onClick={this.onAltAddClick}>
                 A+
-              </Button>
-              <Button outline color="secondary">
-                A-
               </Button>
             </ButtonGroup>
             <ButtonGroup>
@@ -93,7 +90,11 @@ class ProjectTable extends Component {
             </ButtonGroup>
           </ButtonToolbar>
         </Row>
-
+        {altadding ? (
+          <Row>
+            <AltAddForm />
+          </Row>
+        ) : null}
         {loading ? (
           <Row>
             <Spinner type="grow" color="primary" />
@@ -109,31 +110,36 @@ class ProjectTable extends Component {
             <Table bordered className="mt-3">
               <thead>
                 <tr>
-                  <th>#</th>
-                  <th>First Name</th>
-                  <th>Last Name</th>
-                  <th>Username</th>
+                  <th>Kriter Adı</th>
+                </tr>
+                <tr>
+                  <th>Kriter Birimi</th>
+                </tr>
+                <tr>
+                  <th>Kriter Yönü</th>
+                </tr>
+                <tr>
+                  <th>Kriter Ağırlığı</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <th scope="row">BMW</th>
-                  <td>Mark</td>
-                  <td>Otto</td>
-                  <td>@mdo</td>
-                </tr>
-                <tr>
-                  <th scope="row">MERCEDES</th>
-                  <td>Jacob</td>
-                  <td>Thornton</td>
-                  <td>@fat</td>
-                </tr>
-                <tr>
-                  <th scope="row">AUDI</th>
-                  <td>Larry</td>
-                  <td>the Bird</td>
-                  <td>@twitter</td>
-                </tr>
+                {alts !== null
+                  ? alts.map((alt) => (
+                      <tr>
+                        <th scope="row">
+                          {altediting && selectedalt._id === alt._id ? (
+                            <AltEditForm alt={alt} />
+                          ) : (
+                            <AltListGroup
+                              alt={alt}
+                              onDeleteClick={this.onAltDeleteClick}
+                              onEditClick={this.onAltEditClick}
+                            />
+                          )}
+                        </th>
+                      </tr>
+                    ))
+                  : null}
               </tbody>
             </Table>
           </Row>
