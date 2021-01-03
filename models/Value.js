@@ -4,10 +4,10 @@ const Schema = mongoose.Schema;
 //Create SCHEMA
 const ValueSchema = new Schema({
   ownerId: { type: Schema.Types.ObjectId, ref: "Project" },
-  DmId: { type: Schema.Types.ObjectId, ref: "Dm" },
-  AlternativeId: { type: Schema.Types.ObjectId, ref: "Alternative" },
-  CriteriaId: { type: Schema.Types.ObjectId, ref: "Criteria" },
-  Input: {
+  dmId: { type: Schema.Types.ObjectId, ref: "Dm" },
+  alternativeId: { type: Schema.Types.ObjectId, ref: "Alternative" },
+  criteriaId: { type: Schema.Types.ObjectId, ref: "Criteria" },
+  input: {
     type: String,
     required: true,
     maxlength: 20,

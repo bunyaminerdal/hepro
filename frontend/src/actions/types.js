@@ -60,3 +60,16 @@ export const CRIT_EDITING = "CRIT_EDITING";
 export const CRIT_EDITED = "CRIT_EDITED";
 export const CRIT_ADDING = "CRIT_ADDING";
 export const CRIT_ADDED = "CRIT_ADDED";
+
+export const SELECTED_VAL = "SELECTED_VAL";
+export const DESELECT_VAL = "DESELECT_VAL";
+export const GET_VALS = "GET_VALS";
+export const UNLOAD_VALS = "UNLOAD_VALS";
+export const ADD_VAL = "ADD_VAL";
+export const DELETE_VAL = "DELETE_VAL";
+export const VALS_LOADING = "VALS_LOADING";
+export const EDIT_VAL = "EDIT_VAL";
+export const VAL_EDITING = "VAL_EDITING";
+export const VAL_EDITED = "VAL_EDITED";
+export const VAL_ADDING = "VAL_ADDING";
+export const VAL_ADDED = "VAL_ADDED";

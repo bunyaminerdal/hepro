@@ -81,7 +81,7 @@ class ProjectTable extends Component {
           <ButtonToolbar>
             <ButtonGroup>
               <Button outline color="secondary" onClick={this.onCritAddClick}>
-                K+
+                C+
               </Button>
             </ButtonGroup>
             <ButtonGroup>
@@ -141,7 +141,7 @@ class ProjectTable extends Component {
             <Table bordered className="mt-3">
               <thead>
                 <tr>
-                  <th>Kriter Adı</th>
+                  <th>Criteria Name</th>
                   {crits !== null
                     ? crits.map((crit) => (
                         <th scope="row">
