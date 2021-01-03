@@ -17,7 +17,7 @@ mongoose
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
-     useFindAndModify: false ,
+    useFindAndModify: false,
   })
   .then(() => console.log("mongoDB connected..."))
   .catch((err) => console.log(err));
@@ -27,6 +27,9 @@ app.use("/api/users", require("./routes/api/users"));
 app.use("/api/auth", require("./routes/api/auth"));
 app.use("/api/projects", require("./routes/api/projects"));
 app.use("/api/dms", require("./routes/api/dms"));
+app.use("/api/alternatives", require("./routes/api/alternatives"));
+app.use("/api/criterias", require("./routes/api/criterias"));
+app.use("/api/values", require("./routes/api/values"));
 
 // Serve static assets if in production
 if (process.env.NODE_ENV === "production") {

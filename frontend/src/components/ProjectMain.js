@@ -7,6 +7,7 @@ import DmAddForm from "./dmComponents/DmAddForm";
 import DmEditForm from "./dmComponents/DmEditForm";
 import DmListGroup from "./dmComponents/DmListGroup";
 import Spinner from "reactstrap/lib/Spinner";
+import ProjectTable from "./ProjectTable";
 
 export class ProjectMain extends Component {
   componentDidMount() {
@@ -80,7 +81,9 @@ export class ProjectMain extends Component {
                   : null}
               </ListGroup>
             </Col>
-            <Col xs="auto">{dm}</Col>
+            <Col xs="auto">
+              <ProjectTable dmId={dm} />
+            </Col>
           </Row>
         )}
       </div>
