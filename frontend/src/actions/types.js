@@ -47,3 +47,16 @@ export const ALT_EDITING = "ALT_EDITING";
 export const ALT_EDITED = "ALT_EDITED";
 export const ALT_ADDING = "ALT_ADDING";
 export const ALT_ADDED = "ALT_ADDED";
+
+export const SELECTED_CRIT = "SELECTED_CRIT";
+export const DESELECT_CRIT = "DESELECT_CRIT";
+export const GET_CRITS = "GET_CRITS";
+export const UNLOAD_CRITS = "UNLOAD_CRITS";
+export const ADD_CRIT = "ADD_CRIT";
+export const DELETE_CRIT = "DELETE_CRIT";
+export const CRITS_LOADING = "CRITS_LOADING";
+export const EDIT_CRIT = "EDIT_CRIT";
+export const CRIT_EDITING = "CRIT_EDITING";
+export const CRIT_EDITED = "CRIT_EDITED";
+export const CRIT_ADDING = "CRIT_ADDING";
+export const CRIT_ADDED = "CRIT_ADDED";
