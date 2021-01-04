@@ -33,7 +33,7 @@ const valueReducer = (state = initialState, action) => {
     case UNLOAD_VALS:
       return {
         ...state,
-        vals: null,
+        vals: [],
         valloading: false,
         valadding: false,
         valediting: false,

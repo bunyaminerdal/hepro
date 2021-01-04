@@ -33,7 +33,7 @@ const criteriaReducer = (state = initialState, action) => {
     case UNLOAD_CRITS:
       return {
         ...state,
-        crits: null,
+        crits: [],
         critloading: false,
         critadding: false,
         critediting: false,

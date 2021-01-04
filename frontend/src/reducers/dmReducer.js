@@ -33,7 +33,7 @@ const dmReducer = (state = initialState, action) => {
     case UNLOAD_DMS:
       return {
         ...state,
-        dms: null,
+        dms: [],
         dmloading: false,
         dmadding: false,
         dmediting: false,

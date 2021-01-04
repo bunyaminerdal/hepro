@@ -33,7 +33,7 @@ const alternativeReducer = (state = initialState, action) => {
     case UNLOAD_ALTS:
       return {
         ...state,
-        alts: null,
+        alts: [],
         altloading: false,
         altadding: false,
         altediting: false,

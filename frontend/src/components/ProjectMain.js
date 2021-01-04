@@ -30,7 +30,7 @@ export class ProjectMain extends Component {
     }
   };
   render() {
-    const { dm } = this.props.auth;
+    const { project } = this.props.auth;
     const { dms, dmediting, dmadding, selecteddm, dmloading } = this.props.dm;
     return (
       <div className="mt-3 ml-3 mr-3">
@@ -82,7 +82,7 @@ export class ProjectMain extends Component {
               </ListGroup>
             </Col>
             <Col xs="auto">
-              <ProjectTable dmId={dm} />
+              <ProjectTable projectId={project} />
             </Col>
           </Row>
         )}

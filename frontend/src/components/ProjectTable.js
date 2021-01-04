@@ -24,7 +24,13 @@ import {
   deleteCrit,
   critEditing,
 } from "../actions/criteriaActions";
-import { getVals, addVal, valEditing } from "../actions/valueActions";
+import {
+  getVals,
+  addVal,
+  valEditing,
+  valAdding,
+} from "../actions/valueActions";
+import { deselectDm } from "../actions/authActions";
 import AltAddForm from "./altComponents/AltAddForm";
 import AltEditForm from "./altComponents/AltEditForm";
 import AltListGroup from "./altComponents/AltListGroup";
@@ -37,10 +43,10 @@ class ProjectTable extends Component {
     dropdownOpen: false,
   };
   componentDidMount() {
-    if (this.props.auth.project) {
-      this.props.getCrits(this.props.auth.project);
-      this.props.getAlts(this.props.auth.project);
-      this.props.getVals(this.props.auth.project);
+    if (this.props.projectId) {
+      this.props.getCrits(this.props.projectId);
+      this.props.getAlts(this.props.projectId);
+      this.props.getVals(this.props.projectId);
     }
   }
 
@@ -52,6 +58,7 @@ class ProjectTable extends Component {
 
       this.props.criteria.crits.forEach((crit) => {
         this.props.alternative.alts.forEach((alt) => {
+          this.props.valAdding();
           this.props.addVal(
             "asd",
             this.props.auth.project,
@@ -70,6 +77,7 @@ class ProjectTable extends Component {
       );
       this.props.criteria.crits.forEach((crit) => {
         this.props.dm.dms.forEach((dm) => {
+          this.props.valAdding();
           this.props.addVal(
             "asd",
             this.props.auth.project,
@@ -86,6 +94,7 @@ class ProjectTable extends Component {
       );
       this.props.alternative.alts.forEach((alt) => {
         this.props.dm.dms.forEach((dm) => {
+          this.props.valAdding();
           this.props.addVal(
             "asd",
             this.props.auth.project,
@@ -106,6 +115,8 @@ class ProjectTable extends Component {
     this.props.altEditing(id);
   };
   onAltAddClick = () => {
+    //dm seçiliyken sıkıntı oluyor
+    //this.props.deselectDm();
     this.props.altAdding();
   };
   onCritDeleteClick = (id) => {
@@ -132,6 +143,7 @@ class ProjectTable extends Component {
       selectedcrit,
       critloading,
     } = this.props.criteria;
+    const { vals, valloading, valadding } = this.props.value;
     return (
       <div>
         <Row>
@@ -183,7 +195,7 @@ class ProjectTable extends Component {
             <CritAddForm />
           </Row>
         ) : null}
-        {altloading || critloading ? (
+        {altloading || critloading || valloading ? (
           <Row>
             <Spinner type="grow" color="primary" />
             <Spinner type="grow" color="secondary" />
@@ -231,6 +243,22 @@ class ProjectTable extends Component {
                             />
                           )}
                         </th>
+                        {!valloading && crits !== null
+                          ? crits.map((crit) => (
+                              <th key={crit._id}>
+                                {this.props.auth.dm
+                                  ? vals
+                                      .filter(
+                                        (val) =>
+                                          val.dmId === this.props.auth.dm &&
+                                          val.criteriaId === crit._id &&
+                                          val.alternativeId === alt._id
+                                      )
+                                      .map((val) => val.input)
+                                  : null}
+                              </th>
+                            ))
+                          : null}
                       </tr>
                     ))
                   : null}
@@ -262,4 +290,6 @@ export default connect(mapStateToProps, {
   getVals,
   valEditing,
   addVal,
+  valAdding,
+  deselectDm,
 })(ProjectTable);

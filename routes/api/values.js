@@ -19,7 +19,6 @@ router.get("/:id", auth, (req, res) => {
 // @access Private (2.parametre olarak auth ekledik)
 router.post("/:id", auth, (req, res) => {
   const input = req.body[0];
-
   //simple validation
   if (!input) {
     return res.status(400).json({ msg: "Please enter input field!" });
