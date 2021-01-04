@@ -19,20 +19,24 @@ export class ProjectMain extends Component {
   componentDidUpdate(prevProps) {
     if (prevProps.auth.dm === null)
       if (this.props.dm.dms.length > 0) {
-        console.log(this.props.auth.dm, this.props.dm.dms[0]._id);
-        this.props.selectedDm(this.props.dm.dms[0]._id);
+        if (this.props.dm.dms[0]) {
+          this.props.selectedDm(this.props.dm.dms[0]._id);
+        }
       }
   }
 
   onDeleteClick = (id) => {
-    this.props.value.vals.forEach((val) => {
-      if (val.dmId === id) {
-        this.props.deleteVal(val._id);
+    if (this.props.dm.dms.length > 1) {
+      if (this.props.auth.dm === id) {
+        this.props.deselectDm();
       }
-    });
-    this.props.deleteDm(id);
-    if (this.props.auth.dm === id) {
-      this.props.deselectDm();
+      this.props.value.vals.forEach((val) => {
+        if (val.dmId === id) {
+          this.props.deleteVal(val._id);
+        }
+      });
+
+      this.props.deleteDm(id);
     }
   };
   onEditClick = (id) => {
