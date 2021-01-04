@@ -143,7 +143,7 @@ class ProjectTable extends Component {
       selectedcrit,
       critloading,
     } = this.props.criteria;
-    const { vals, valloading, valadding } = this.props.value;
+    const { vals, valloading } = this.props.value;
     return (
       <div>
         <Row>

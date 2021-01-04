@@ -3,14 +3,11 @@ const router = express.Router();
 const auth = require("../../middleware/auth");
 const Alternative = require("../../models/alternative");
 
-//Item Model
-const Dm = require("../../models/alternative");
-
 // @route GET api/items
 // @desc GET all Items
 // @access Public
 router.get("/:id", auth, (req, res) => {
-  Dm.find({ ownerId: req.params.id })
+  Alternative.find({ ownerId: req.params.id })
     .sort({ date: -1 })
     .then((alts) => res.json(alts));
 });
