@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getDms, dmAdding, deleteDm, dmEditing } from "../actions/dmActions";
+import { deleteVal } from "../actions/valueActions";
 import { selectedDm } from "../actions/authActions";
 import { ListGroup, ListGroupItem, Button, Row, Col } from "reactstrap";
 import DmAddForm from "./dmComponents/DmAddForm";
@@ -16,6 +17,11 @@ export class ProjectMain extends Component {
     }
   }
   onDeleteClick = (id) => {
+    this.props.value.vals.forEach((val) => {
+      if (val.dmId === id) {
+        this.props.deleteVal(val._id);
+      }
+    });
     this.props.deleteDm(id);
   };
   onEditClick = (id) => {
@@ -94,6 +100,7 @@ export class ProjectMain extends Component {
 const mapStateToProps = (state) => ({
   auth: state.auth,
   dm: state.dm,
+  value: state.value,
 });
 
 export default connect(mapStateToProps, {
@@ -102,4 +109,5 @@ export default connect(mapStateToProps, {
   deleteDm,
   dmEditing,
   selectedDm,
+  deleteVal,
 })(ProjectMain);

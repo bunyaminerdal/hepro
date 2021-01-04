@@ -29,6 +29,7 @@ import {
   addVal,
   valEditing,
   valAdding,
+  deleteVal,
 } from "../actions/valueActions";
 import { deselectDm } from "../actions/authActions";
 import AltAddForm from "./altComponents/AltAddForm";
@@ -109,17 +110,25 @@ class ProjectTable extends Component {
 
   toggle = () => this.setState({ dropdownOpen: !this.state.dropdownOpen });
   onAltDeleteClick = (id) => {
+    this.props.value.vals.forEach((val) => {
+      if (val.alternativeId === id) {
+        this.props.deleteVal(val._id);
+      }
+    });
     this.props.deleteAlt(id);
   };
   onAltEditClick = (id) => {
     this.props.altEditing(id);
   };
   onAltAddClick = () => {
-    //dm seçiliyken sıkıntı oluyor
-    //this.props.deselectDm();
     this.props.altAdding();
   };
   onCritDeleteClick = (id) => {
+    this.props.value.vals.forEach((val) => {
+      if (val.criteriaId === id) {
+        this.props.deleteVal(val._id);
+      }
+    });
     this.props.deleteCrit(id);
   };
   onCritEditClick = (id) => {
@@ -292,4 +301,5 @@ export default connect(mapStateToProps, {
   addVal,
   valAdding,
   deselectDm,
+  deleteVal,
 })(ProjectTable);

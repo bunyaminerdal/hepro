@@ -7,6 +7,10 @@ import {
   projectEditing,
   projectAdding,
 } from "../../actions/projectActions";
+import { deleteDm } from "../../actions/dmActions";
+import { deleteAlt } from "../../actions/alternativeActions";
+import { deleteCrit } from "../../actions/criteriaActions";
+import { deleteVal } from "../../actions/valueActions";
 import { selectedProject } from "../../actions/authActions";
 import PropTypes from "prop-types";
 import ProjectEditForm from "./ProjectEditForm";
@@ -27,6 +31,26 @@ class ProjectList extends Component {
   }
 
   onDeleteClick = (id) => {
+    this.props.value.vals.forEach((val) => {
+      if (val.ownerId === id) {
+        this.props.deleteVal(val._id);
+      }
+    });
+    this.props.dm.dms.forEach((dm) => {
+      if (dm.ownerId === id) {
+        this.props.deleteDm(dm._id);
+      }
+    });
+    this.props.alternative.alts.forEach((alt) => {
+      if (alt.ownerId === id) {
+        this.props.deleteAlt(alt._id);
+      }
+    });
+    this.props.criteria.crits.forEach((crit) => {
+      if (crit.ownerId === id) {
+        this.props.deleteCrit(crit._id);
+      }
+    });
     this.props.deleteProject(id);
   };
 
@@ -101,6 +125,10 @@ class ProjectList extends Component {
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
   project: state.project,
+  dm: state.dm,
+  alternative: state.alternative,
+  criteria: state.criteria,
+  value: state.value,
 });
 
 export default connect(mapStateToProps, {
@@ -109,4 +137,8 @@ export default connect(mapStateToProps, {
   selectedProject,
   projectEditing,
   projectAdding,
+  deleteDm,
+  deleteAlt,
+  deleteCrit,
+  deleteVal,
 })(ProjectList);
