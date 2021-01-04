@@ -155,55 +155,6 @@ class ProjectTable extends Component {
     const { vals, valloading } = this.props.value;
     return (
       <div>
-        <Row>
-          <ButtonToolbar>
-            <ButtonGroup>
-              <Button outline color="secondary" onClick={this.onCritAddClick}>
-                C+
-              </Button>
-            </ButtonGroup>
-            <ButtonGroup>
-              <Button outline color="secondary" onClick={this.onAltAddClick}>
-                A+
-              </Button>
-            </ButtonGroup>
-            <ButtonGroup>
-              <Button outline color="secondary">
-                5
-              </Button>
-              <Button outline color="secondary">
-                6
-              </Button>
-              <Button outline color="secondary">
-                7
-              </Button>
-            </ButtonGroup>
-            <ButtonGroup>
-              <ButtonDropdown
-                isOpen={this.state.dropdownOpen}
-                toggle={this.toggle}
-              >
-                <DropdownToggle caret outline color="secondary">
-                  Dropdown
-                </DropdownToggle>
-                <DropdownMenu>
-                  <DropdownItem>Dropdown Link</DropdownItem>
-                  <DropdownItem>Dropdown Link</DropdownItem>
-                </DropdownMenu>
-              </ButtonDropdown>
-            </ButtonGroup>
-          </ButtonToolbar>
-        </Row>
-        {altadding ? (
-          <Row>
-            <AltAddForm />
-          </Row>
-        ) : null}
-        {critadding ? (
-          <Row>
-            <CritAddForm />
-          </Row>
-        ) : null}
         {altloading || critloading || valloading ? (
           <Row>
             <Spinner type="grow" color="primary" />
@@ -215,65 +166,124 @@ class ProjectTable extends Component {
             <h3 className="ml-3"> Loading...</h3>
           </Row>
         ) : (
-          <Row>
-            <Table bordered className="mt-3">
-              <thead>
-                <tr>
-                  <th>Criteria Name</th>
-                  {crits !== null
-                    ? crits.map((crit) => (
+          <div>
+            <Row>
+              <ButtonToolbar>
+                <ButtonGroup>
+                  <Button
+                    outline
+                    color="secondary"
+                    onClick={this.onCritAddClick}
+                  >
+                    C+
+                  </Button>
+                </ButtonGroup>
+                <ButtonGroup>
+                  <Button
+                    outline
+                    color="secondary"
+                    onClick={this.onAltAddClick}
+                  >
+                    A+
+                  </Button>
+                </ButtonGroup>
+                <ButtonGroup>
+                  <Button outline color="secondary">
+                    5
+                  </Button>
+                  <Button outline color="secondary">
+                    6
+                  </Button>
+                  <Button outline color="secondary">
+                    7
+                  </Button>
+                </ButtonGroup>
+                <ButtonGroup>
+                  <ButtonDropdown
+                    isOpen={this.state.dropdownOpen}
+                    toggle={this.toggle}
+                  >
+                    <DropdownToggle caret outline color="secondary">
+                      Dropdown
+                    </DropdownToggle>
+                    <DropdownMenu>
+                      <DropdownItem>Dropdown Link</DropdownItem>
+                      <DropdownItem>Dropdown Link</DropdownItem>
+                    </DropdownMenu>
+                  </ButtonDropdown>
+                </ButtonGroup>
+              </ButtonToolbar>
+            </Row>
+            {altadding ? (
+              <Row>
+                <AltAddForm />
+              </Row>
+            ) : null}
+            {critadding ? (
+              <Row>
+                <CritAddForm />
+              </Row>
+            ) : null}
+            <Row>
+              <Table bordered className="mt-3">
+                <thead>
+                  <tr>
+                    <th>Criteria Name</th>
+                    {crits.map((crit) => (
+                      <th key={crit._id}>
+                        {critediting && selectedcrit._id === crit._id ? (
+                          <CritEditForm crit={crit} />
+                        ) : (
+                          <CritListGroup
+                            crit={crit}
+                            onDeleteClick={this.onCritDeleteClick}
+                            onEditClick={this.onCritEditClick}
+                          />
+                        )}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {alts.map((alt) => (
+                    <tr key={alt._id}>
+                      <th scope="row">
+                        {altediting && selectedalt._id === alt._id ? (
+                          <AltEditForm alt={alt} />
+                        ) : (
+                          <AltListGroup
+                            alt={alt}
+                            onDeleteClick={this.onAltDeleteClick}
+                            onEditClick={this.onAltEditClick}
+                          />
+                        )}
+                      </th>
+                      {crits.map((crit) => (
                         <th key={crit._id}>
-                          {critediting && selectedcrit._id === crit._id ? (
-                            <CritEditForm crit={crit} />
+                          {this.props.auth.dm ? (
+                            vals
+                              .filter(
+                                (val) =>
+                                  val.dmId === this.props.auth.dm &&
+                                  val.criteriaId === crit._id &&
+                                  val.alternativeId === alt._id
+                              )
+                              .map((val) => val.input)
                           ) : (
-                            <CritListGroup
-                              crit={crit}
-                              onDeleteClick={this.onCritDeleteClick}
-                              onEditClick={this.onCritEditClick}
-                            />
+                            <div>
+                              <Spinner type="grow" color="dark" />
+                              <Spinner type="grow" color="secondary" />
+                              <Spinner type="grow" color="light" />
+                            </div>
                           )}
                         </th>
-                      ))
-                    : null}
-                </tr>
-              </thead>
-              <tbody>
-                {alts !== null
-                  ? alts.map((alt) => (
-                      <tr key={alt._id}>
-                        <th scope="row">
-                          {altediting && selectedalt._id === alt._id ? (
-                            <AltEditForm alt={alt} />
-                          ) : (
-                            <AltListGroup
-                              alt={alt}
-                              onDeleteClick={this.onAltDeleteClick}
-                              onEditClick={this.onAltEditClick}
-                            />
-                          )}
-                        </th>
-                        {!valloading && crits !== null
-                          ? crits.map((crit) => (
-                              <th key={crit._id}>
-                                {this.props.auth.dm
-                                  ? vals
-                                      .filter(
-                                        (val) =>
-                                          val.dmId === this.props.auth.dm &&
-                                          val.criteriaId === crit._id &&
-                                          val.alternativeId === alt._id
-                                      )
-                                      .map((val) => val.input)
-                                  : null}
-                              </th>
-                            ))
-                          : null}
-                      </tr>
-                    ))
-                  : null}
-              </tbody>
-            </Table>
-          </Row>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            </Row>
+          </div>
         )}
       </div>
     );

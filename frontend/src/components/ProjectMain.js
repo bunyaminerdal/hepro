@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getDms, dmAdding, deleteDm, dmEditing } from "../actions/dmActions";
 import { deleteVal } from "../actions/valueActions";
-import { selectedDm } from "../actions/authActions";
+import { selectedDm, deselectDm } from "../actions/authActions";
 import { ListGroup, ListGroupItem, Button, Row, Col } from "reactstrap";
 import DmAddForm from "./dmComponents/DmAddForm";
 import DmEditForm from "./dmComponents/DmEditForm";
@@ -16,6 +16,14 @@ export class ProjectMain extends Component {
       this.props.getDms(this.props.projectId);
     }
   }
+  componentDidUpdate(prevProps) {
+    if (prevProps.auth.dm === null)
+      if (this.props.dm.dms.length > 0) {
+        console.log(this.props.auth.dm, this.props.dm.dms[0]._id);
+        this.props.selectedDm(this.props.dm.dms[0]._id);
+      }
+  }
+
   onDeleteClick = (id) => {
     this.props.value.vals.forEach((val) => {
       if (val.dmId === id) {
@@ -23,6 +31,9 @@ export class ProjectMain extends Component {
       }
     });
     this.props.deleteDm(id);
+    if (this.props.auth.dm === id) {
+      this.props.deselectDm();
+    }
   };
   onEditClick = (id) => {
     this.props.dmEditing(id);
@@ -110,4 +121,5 @@ export default connect(mapStateToProps, {
   dmEditing,
   selectedDm,
   deleteVal,
+  deselectDm,
 })(ProjectMain);
