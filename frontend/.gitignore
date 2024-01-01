@@ -22,7 +22,5 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-notlar.txt
-frontend/debug.log
 frontend/.eslintcache
-frontend/.eslintcache
+.eslintcache

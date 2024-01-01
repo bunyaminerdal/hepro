@@ -1,28 +1,23 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-
 //Create SCHEMA
-const UserSchema = new Schema({
+const ProjectSchema = new Schema({
+  ownerId: { type: Schema.Types.ObjectId, ref: "User" },
   name: {
     type: String,
     required: true,
     minlength:3,
     maxlength:30,
   },
-  email: {
+  description: {
     type: String,
-    required: true,
-    unique: true,
-    maxlength:50,
+    maxlength:150,
   },
-  password: {
-    type: String,
-    required: true,    
-  },
-  register_date: {
+  date: {
     type: Date,
     default: Date.now,
   },
+  
 });
 
-module.exports = User = mongoose.model("user", UserSchema);
+module.exports = Project = mongoose.model("project", ProjectSchema);

@@ -7,6 +7,8 @@ const auth = require("../../middleware/auth");
 
 //Item Model
 const User = require("../../models/user");
+const Project = require("../../models/project");
+const Dm = require("../../models/decisionmaker");
 
 // @route POST api/auth
 // @desc Authenticate a user
@@ -51,8 +53,24 @@ router.post("/", (req, res) => {
 // @access private
 router.get("/user", auth, (req, res) => {
   User.findById(req.user.id)
-    .select("-pasword")
+    .select("-password")
     .then((user) => res.json(user));
+});
+// @route GET api/auth/user
+// @desc get user data
+// @access private
+router.get("/project/:id", auth, (req, res) => {
+  Project.findById(req.params.id)
+    .then((project) => res.json(project))
+    .catch((err) => res.status(404).json({ success: false }));
+});
+// @route GET api/auth/user
+// @desc get user data
+// @access private
+router.get("/dm/:id", auth, (req, res) => {
+  Dm.findById(req.params.id)
+    .then((dm) => res.json(dm))
+    .catch((err) => res.status(404).json({ success: false }));
 });
 
 module.exports = router;
